@@ -6,3 +6,8 @@ class Crew(models.Model):
 
     def __str__(self):
         return self.name
+
+class Start_Time(models.Model):
+    start_sequence = models.IntegerField()
+    bib_number = models.IntegerField(blank=True, null=True,)
+    start_tap = models.CharField(max_length=10)

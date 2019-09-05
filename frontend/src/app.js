@@ -1,15 +1,33 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import axios from 'axios'
+
+
+import { HashRouter, Route, Switch } from 'react-router-dom'
+// import { ToastContainer } from 'react-toastify'
+
+import Home from './components/pages/Home'
+import Navbar from './components/common/Navbar'
+
+
+// import 'react-toastify/dist/ReactToastify.css'
+// import '@fortawesome/fontawesome-free/js/all.js'
+import 'bulma'
+import './style.scss'
+
 
 class App extends React.Component {
-  componentDidMount() {
-    axios.get('/api/movies/')
-      .then(res => console.log(res.data))
-  }
-  render() {
-    return (
-      <h1>Hello Django!</h1>
+
+
+  render(){
+    return(
+      <div>
+        <HashRouter>
+          <Navbar />
+          <Switch>
+            <Route path="/" component={Home} />
+          </Switch>
+        </HashRouter>
+      </div>
     )
   }
 }
