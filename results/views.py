@@ -4,10 +4,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 # from pprint import pprint
 import requests
-from dotenv import load_dotenv
-load_dotenv()
-from .serializers import CrewSerializer
-from .models import Crew, Start_Time
+from .serializers import CrewSerializer, WriteStartTimesSerializer, StartTimesSerializer
+from .models import Crew, StartTime
 
 
 class CrewDataImport(APIView):
@@ -38,30 +36,44 @@ class CrewDataImport(APIView):
             serializer = CrewSerializer(crews, many=True)
             return Response(serializer.data)
 
-        print(r.status_code)
+        return Response(status=400)
 
 
-class CrewStartTimes(APIView):
+class CrewStartRaceTimes(APIView):
 
     def get(self, _request):
 
         script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
-        rel_path = "csv/start.csv"
+        rel_path = "csv/start_times.csv"
         abs_file_path = os.path.join(script_dir, rel_path)
 
         with open(abs_file_path, newline='') as f:
             reader = csv.reader(f)
             next(reader) # skips the first row
+
             for row in reader:
-                # print(', '.join(row))
-                _, created = Start_Time.objects.get_or_create(
-                    start_sequence=row[0],
-                    bib_number=row[1],
-                    start_tap=row[4],
-                    )
-                # creates a tuple of the new object or
-                # current object and a boolean of if it was created
-            return Response(created)
+
+                if row[1] == '':
+                    row[1] = None
+
+                if row[3] == '':
+                    row[3] = None
+
+                if row:
+                    data = {
+                        'sequence': row[0],
+                        'bib_number': row[1],
+                        'tap': row[3],
+                        'time_tap': row[4],
+                    }
+                    serializer = WriteStartTimesSerializer(data=data)
+                    serializer.is_valid(raise_exception=True)
+                    serializer.save()
+
+            start_times = StartTime.objects.all()
+
+            serializer = StartTimesSerializer(start_times, many=True)
+            return Response(serializer.data)
 
 
 
