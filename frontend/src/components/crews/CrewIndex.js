@@ -4,15 +4,20 @@ import axios from 'axios'
 class CrewIndex extends React.Component {
   constructor() {
     super()
-
+    this.state= {
+      crews: []
+    }
   }
 
   componentDidMount() {
     axios.get('/api/crews/')
-      .then(res => console.log(res.data))
+      .then(res => this.setState({ crews: res.data}))
   }
 
   render() {
+
+    console.log(this.state.crews)
+
     return (
       <section className="section">
         <div className="container">
@@ -32,7 +37,6 @@ class CrewIndex extends React.Component {
                 <th>Status</th>
                 <th><abbr title="Penalty">P</abbr></th>
                 <th><abbr title="Handicap">H</abbr></th>
-                <th><abbr title="Overall time">Time</abbr></th>
                 <th>Event</th>
                 <th>Start sequence</th>
                 <th>Start time</th>
@@ -54,7 +58,6 @@ class CrewIndex extends React.Component {
                 <th>Status</th>
                 <th><abbr title="Penalty">P</abbr></th>
                 <th><abbr title="Handicap">H</abbr></th>
-                <th><abbr title="Overall time">Time</abbr></th>
                 <th>Event</th>
                 <th>Start sequence</th>
                 <th>Start time</th>
@@ -64,26 +67,27 @@ class CrewIndex extends React.Component {
               </tr>
             </tfoot>
             <tbody>
-              <tr>
-                <td>Crew</td>
-                <td>Crew ID</td>
-                <td><abbr title="Composite code">Code</abbr></td>
-                <td>Club</td>
-                <td><abbr title="Rowing CRI">R-CRI</abbr></td>
-                <td><abbr title="Rowing CRI Max">R-CRI-Max</abbr></td>
-                <td><abbr title="Sculling CRI">S-CRI</abbr></td>
-                <td><abbr title="Sculling CRI Max">S-CRI-Max</abbr></td>
-                <td>Status</td>
-                <td><abbr title="Penalty">P</abbr></td>
-                <td><abbr title="Handicap">H</abbr></td>
-                <td><abbr title="Overall time">Time</abbr></td>
-                <td>Event</td>
-                <td>Start sequence</td>
-                <td>Start time</td>
-                <td>Finish sequence</td>
-                <td>Finish time</td>
-                <td>Race time</td>
-              </tr>
+              {this.state.crews.map(crew =>
+                <tr key={crew.id}>
+                  <td>{crew.name}</td>
+                  <td>{crew.id}</td>
+                  <td>{crew.composite_code}</td>
+                  <td>{crew.club_id}</td>
+                  <td>{crew.rowing_CRI}</td>
+                  <td>{crew.rowing_CRI_max}</td>
+                  <td>{crew.sculling_CRI}</td>
+                  <td>{crew.sculling_CRI_max}</td>
+                  <td>{crew.status}</td>
+                  <td>{crew.penalty}</td>
+                  <td>{crew.handicap}</td>
+                  <td>{crew.event_id}</td>
+                  <td>{crew.times[0].sequence}</td>
+                  <td>{crew.times[0].time_tap}</td>
+                  <td></td>
+                  <td></td>
+                  <td>Race time</td>
+                </tr>
+              )}
             </tbody>
           </table>
 
