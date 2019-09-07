@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 class CrewIndex extends React.Component {
   constructor() {
@@ -69,7 +70,7 @@ class CrewIndex extends React.Component {
             <tbody>
               {this.state.crews.map(crew =>
                 <tr key={crew.id}>
-                  <td>{crew.name}</td>
+                  <td><Link to={`/crews/${crew.id}`}>{crew.name}</Link></td>
                   <td>{crew.id}</td>
                   <td>{crew.composite_code}</td>
                   <td>{crew.club_id}</td>
