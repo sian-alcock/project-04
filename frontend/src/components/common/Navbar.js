@@ -2,7 +2,7 @@ import React from 'react'
 import { Link, withRouter } from 'react-router-dom'
 
 // import Auth from '../../lib/Auth'
-// import image from '../../assets/logo.png'
+import image from '../../assets/ph-logo.jpg'
 
 class Navbar extends React.Component {
 
@@ -51,7 +51,8 @@ class Navbar extends React.Component {
           </div>
           <div className={`navbar-menu ${this.state.navbarOpen ? 'is-active' : ''}`}>
             <div className="navbar-start">
-              <Link to="/" className="navbar-item">Home</Link>
+              <Link to="/" className="navbar-item">
+                <img src={image} alt="Pairs Head Results" /></Link>
               <Link to="/crews" className="navbar-item">Racing crews</Link>
             </div>
           </div>

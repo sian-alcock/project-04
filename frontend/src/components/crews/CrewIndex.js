@@ -31,11 +31,6 @@ class CrewIndex extends React.Component {
                 <th>Crew ID</th>
                 <th><abbr title="Composite code">Code</abbr></th>
                 <th>Club</th>
-                <th><abbr title="Rowing CRI">R-CRI</abbr></th>
-                <th><abbr title="Rowing CRI Max">R-CRI-Max</abbr></th>
-                <th><abbr title="Sculling CRI">S-CRI</abbr></th>
-                <th><abbr title="Sculling CRI Max">S-CRI-Max</abbr></th>
-                <th>Status</th>
                 <th><abbr title="Penalty">P</abbr></th>
                 <th><abbr title="Handicap">H</abbr></th>
                 <th>Event</th>
@@ -52,11 +47,6 @@ class CrewIndex extends React.Component {
                 <th>Crew ID</th>
                 <th><abbr title="Composite code">Code</abbr></th>
                 <th>Club</th>
-                <th><abbr title="Rowing CRI">R-CRI</abbr></th>
-                <th><abbr title="Rowing CRI Max">R-CRI-Max</abbr></th>
-                <th><abbr title="Sculling CRI">S-CRI</abbr></th>
-                <th><abbr title="Sculling CRI Max">S-CRI-Max</abbr></th>
-                <th>Status</th>
                 <th><abbr title="Penalty">P</abbr></th>
                 <th><abbr title="Handicap">H</abbr></th>
                 <th>Event</th>
@@ -74,11 +64,6 @@ class CrewIndex extends React.Component {
                   <td>{crew.id}</td>
                   <td>{crew.composite_code}</td>
                   <td>{crew.club_id}</td>
-                  <td>{crew.rowing_CRI}</td>
-                  <td>{crew.rowing_CRI_max}</td>
-                  <td>{crew.sculling_CRI}</td>
-                  <td>{crew.sculling_CRI_max}</td>
-                  <td>{crew.status}</td>
                   <td>{crew.penalty}</td>
                   <td>{crew.handicap}</td>
                   <td>{crew.event_id}</td>

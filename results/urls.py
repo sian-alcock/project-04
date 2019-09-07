@@ -6,4 +6,5 @@ urlpatterns = [
     path('crews/<int:pk>', CrewDetailView.as_view()),
     path('crew-start-times/', CrewStartRaceTimes.as_view()),
     path('crew-data-import/', CrewDataImport.as_view()),
+    path('/', CrewListView.as_view()),
 ]
