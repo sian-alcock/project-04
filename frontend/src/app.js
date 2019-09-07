@@ -6,6 +6,7 @@ import { HashRouter, Route, Switch } from 'react-router-dom'
 // import { ToastContainer } from 'react-toastify'
 
 import Home from './components/pages/Home'
+import CrewIndex from './components/crews/CrewIndex'
 import Navbar from './components/common/Navbar'
 
 
@@ -24,6 +25,7 @@ class App extends React.Component {
         <HashRouter>
           <Navbar />
           <Switch>
+            <Route path="/crews" component={CrewIndex} />
             <Route path="/" component={Home} />
           </Switch>
         </HashRouter>
