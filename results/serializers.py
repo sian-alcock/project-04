@@ -3,16 +3,19 @@ from rest_framework import serializers
 from .models import Crew, StartTime
 
 
+class TimeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = StartTime
+        fields = ('id', 'sequence', 'bib_number', 'tap', 'time_tap', 'crew_id',)
+
 class CrewSerializer(serializers.ModelSerializer):
 
-    class Meta:
-        model = Crew
-        fields = ('id', 'name',)
+    times = TimeSerializer(many=True)
 
-class CrewDataImportSerializer(serializers.ModelSerializer):
     class Meta:
         model = Crew
-        fields = ('id', 'name',)
+        fields = ('id', 'name', 'composite_code', 'club_id', 'rowing_CRI', 'rowing_CRI_max', 'sculling_CRI', 'sculling_CRI_max', 'event_id', 'status', 'penalty', 'handicap', 'manual_override_time', 'bib_number', 'times')
 
 
 class WriteStartTimesSerializer(serializers.ModelSerializer):

@@ -3,7 +3,19 @@ from django.db import models
 # Create your models here.
 class Crew(models.Model):
     name = models.CharField(max_length=50)
-    bib_number = models.IntegerField(blank=True, null=True,)
+    id = models.IntegerField(primary_key=True)
+    composite_code = models.CharField(max_length=10)
+    club_id = models.IntegerField()
+    rowing_CRI = models.IntegerField()
+    rowing_CRI_max = models.IntegerField()
+    sculling_CRI = models.IntegerField()
+    sculling_CRI_max = models.IntegerField()
+    event_id = models.IntegerField()
+    status = models.CharField(max_length=20)
+    penalty = models.IntegerField(default=0)
+    handicap = models.IntegerField(default=0)
+    manual_override_time = models.IntegerField(blank=True, null=True)
+    bib_number = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -13,12 +25,10 @@ class StartTime(models.Model):
     bib_number = models.IntegerField(blank=True, null=True,)
     tap = models.CharField(max_length=10)
     time_tap = models.BigIntegerField()
-
-class FinishTime(models.Model):
-    sequence = models.IntegerField()
-    bib_number = models.IntegerField(blank=True, null=True,)
-    tap = models.CharField(max_length=10)
-    time_tap = models.BigIntegerField()
+    crew_id = models.ForeignKey(Crew, related_name='times',
+    on_delete=models.SET_NULL,
+    blank=True,
+    null=True,)
 
     # @property
     # def raw_time(self):

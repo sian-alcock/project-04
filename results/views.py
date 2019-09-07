@@ -1,12 +1,61 @@
 import csv
 import os
+import requests
+from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 # from pprint import pprint
-import requests
+
 from .serializers import CrewSerializer, WriteStartTimesSerializer, StartTimesSerializer
 from .models import Crew, StartTime
 
+
+class CrewListView(APIView): # extend the APIView
+
+    def get(self, _request):
+        crews = Crew.objects.all() # get all the crews
+        serializer = CrewSerializer(crews, many=True)
+
+        return Response(serializer.data) # send the JSON to the client
+
+    def post(self, request):
+        serializer = CrewSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+
+        return Response(serializer.errors, status=422)
+
+
+class CrewDetailView(APIView): # extend the APIView
+
+    def get_crew(self, pk):
+        try:
+            crew = Crew.objects.get(pk=pk)
+        except Crew.DoesNotExist:
+            raise Http404
+        return crew
+
+    def get(self, _request, pk):
+        crew = self.get_crew(pk)
+        serializer = CrewSerializer(crew)
+        return Response(serializer.data)
+
+    def put(self, request, pk):
+        crew = self.get_crew(pk)
+        crew = Crew.objects.get(pk=pk)
+        serializer = CrewSerializer(crew, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+
+        return Response(serializer.errors, status=422)
+
+    def delete(self, _request, pk):
+        crew = self.get_crew(pk)
+        crew = Crew.objects.get(pk=pk)
+        crew.delete()
+        return Response(status=204)
 
 class CrewDataImport(APIView):
 
@@ -74,22 +123,3 @@ class CrewStartRaceTimes(APIView):
 
             serializer = StartTimesSerializer(start_times, many=True)
             return Response(serializer.data)
-
-
-
-class CrewListView(APIView): # extend the APIView
-
-    def get(self, _request):
-        crews = Crew.objects.all() # get all the crews
-        serializer = CrewSerializer(crews, many=True)
-
-        return Response(serializer.data) # send the JSON to the client
-
-
-class CrewDetailView(APIView): # extend the APIView
-
-    def get(self, _request, pk):
-        crew = Crew.objects.get(pk=pk) # get a book by id (pk means primary key)
-        serializer = CrewSerializer(crew)
-
-        return Response(serializer.data) # send the JSON to the client
