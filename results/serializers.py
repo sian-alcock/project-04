@@ -49,17 +49,18 @@ class WriteRaceTimesSerializer(serializers.ModelSerializer):
         return value
 
     def validate_crew_id(self, value):
+        # relies on there being a crew with id 999999 = unknown
+        # if the crew Id is blank, then assign it to crew 999999
+        # if value == '':
+        #     value = value = Crew.objects.get(pk=999999)
 
-        if value == '':
-            value = None
+        # else:
+            # if crew_id not found, set to crew 999999
+        try:
+            value = Crew.objects.get(pk=int(value))
 
-        else:
-            # if crew_id not found, set to null
-            try:
-                value = Crew.objects.get(pk=int(value))
-
-            except Crew.DoesNotExist:
-                value = None
+        except Crew.DoesNotExist:
+            value = Crew.objects.get(pk=999999)
 
         return value
 

@@ -110,6 +110,9 @@ class CrewRaceTimes(APIView):
                 if row[3] == '':
                     row[3] = None
 
+                if row[8] == '':
+                    row[8] = 999999
+
                 if row:
                     data = {
                         'sequence': row[0],
