@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 # from pprint import pprint
 
-from .serializers import CrewSerializer, WriteStartTimesSerializer, StartTimesSerializer
+from .serializers import CrewSerializer, WriteStartTimesSerializer, StartTimesSerializer, WriteCrewSerializer
 from .models import Crew, StartTime
 
 
@@ -79,10 +79,10 @@ class CrewDataImport(APIView):
 
 
             for crew in r.json()['crews']:
-                Crew.objects.get_or_create(name=crew['name'])
+                Crew.objects.get_or_create(name=crew['name'], id=crew['id'], composite_code=crew['compositeCode'], club_id=crew['clubId'], rowing_CRI=crew['rowingCRI'], rowing_CRI_max=crew['rowingCRIMax'], sculling_CRI=crew['scullingCRI'], sculling_CRI_max=crew['scullingCRIMax'], event_id=crew['eventId'], status=crew['status'],)
 
             crews = Crew.objects.all()
-            serializer = CrewSerializer(crews, many=True)
+            serializer = WriteCrewSerializer(crews, many=True)
             return Response(serializer.data)
 
         return Response(status=400)

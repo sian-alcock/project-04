@@ -67,10 +67,10 @@ class CrewIndex extends React.Component {
                   <td>{crew.penalty}</td>
                   <td>{crew.handicap}</td>
                   <td>{crew.event_id}</td>
-                  <td>{crew.times[0].sequence}</td>
-                  <td>{crew.times[0].time_tap}</td>
-                  <td></td>
-                  <td></td>
+                  <td>startseq</td>
+                  <td>starttime</td>
+                  <td>finishseq</td>
+                  <td>finishtime</td>
                   <td>Race time</td>
                 </tr>
               )}

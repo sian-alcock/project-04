@@ -18,6 +18,12 @@ class CrewSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'composite_code', 'club_id', 'rowing_CRI', 'rowing_CRI_max', 'sculling_CRI', 'sculling_CRI_max', 'event_id', 'status', 'penalty', 'handicap', 'manual_override_time', 'bib_number', 'times')
 
 
+class WriteCrewSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Crew
+        fields = ('id', 'name', 'composite_code', 'club_id', 'rowing_CRI', 'rowing_CRI_max', 'sculling_CRI', 'sculling_CRI_max', 'event_id', 'status', 'penalty', 'handicap', 'manual_override_time',)
+
 class WriteStartTimesSerializer(serializers.ModelSerializer):
 
     time_tap = serializers.CharField(max_length=20)
