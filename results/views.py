@@ -61,7 +61,7 @@ class ClubDataImport(APIView):
 
     def get(self, _request):
         # Start by deleting all existing clubs
-        # Club.objects.all().delete()
+        Club.objects.all().delete()
 
         Meeting = os.getenv("MEETING2018") # Competition Meeting API
         UserAPI = os.getenv("USERAPI") # As supplied in email
@@ -71,22 +71,20 @@ class ClubDataImport(APIView):
         request = {'api_key':UserAPI, 'meetingIdentifier':Meeting}
         url = 'https://webapi.britishrowing.org/api/OE2ClubInformation' # change ENDPOINTNAME for the needed endpoint eg OE2MeetingSetup
 
-        # OE2CrewInformation
-        # OE2ClubInformation
-        # OE2MeetingSetup
-
         r = requests.post(url, json=request, headers=header)
         if r.status_code == 200:
             # pprint(r.json())
 
-            for data in r.json():
+            clubs = r.json()
+
+            for club in clubs:
                 data = {
-                    'name': 'name',
-                    'id': 'id',
-                    'abbreviation': 'abbreviation',
-                    'index_code': 'indexCode',
-                    'colours': 'colours',
-                    'blade_image': 'bladeImage',
+                    'name': club['name'],
+                    'id': club['id'],
+                    'abbreviation': club['abbreviation'],
+                    'index_code': club['indexCode'],
+                    'colours': club['colours'],
+                    'blade_image': club['bladeImage'],
                 }
                 serializer = WriteClubSerializer(data=data)
                 serializer.is_valid(raise_exception=True)
@@ -101,8 +99,11 @@ class ClubDataImport(APIView):
 class EventDataImport(APIView):
 
     def get(self, _request):
-        # Start by deleting all existing clubs
+        # Start by deleting all existing events
         # Event.objects.all().delete()
+        #
+        # Event.objects.create('id'=999999, 'name'='Unknown', 'override_name'='Unknown',
+        # 'info'='Unknown', 'type'='Unknown', 'gender'='Unknown',)
 
         Meeting = os.getenv("MEETING2018") # Competition Meeting API
         UserAPI = os.getenv("USERAPI") # As supplied in email
@@ -168,7 +169,7 @@ class CrewDataImport(APIView):
         return Response(status=400)
 
 
-class CrewRaceTimes(APIView):
+class CrewRaceTimesImport(APIView):
 
     def get(self, _request):
 
