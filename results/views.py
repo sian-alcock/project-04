@@ -9,11 +9,57 @@ from rest_framework.response import Response
 from .serializers import CrewSerializer, WriteRaceTimesSerializer, RaceTimesSerializer, WriteCrewSerializer, WriteClubSerializer, ClubSerializer, EventSerializer
 from .models import Club, Event, Crew, RaceTime
 
+class RaceTimeListView(APIView): # extend the APIView
+
+    def get(self, _request):
+        race_times = RaceTime.objects.all() # get all the crews
+        serializer = RaceTimesSerializer(race_times, many=True)
+
+        return Response(serializer.data) # send the JSON to the client
+
+    def post(self, request):
+        serializer = RaceTimesSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+
+        return Response(serializer.errors, status=422)
+
+
+class CrewDetailView(APIView): # extend the APIView
+
+    def get_race_time(self, pk):
+        try:
+            race_time = RaceTime.objects.get(pk=pk)
+        except RaceTime.DoesNotExist:
+            raise Http404
+        return race_time
+
+    def get(self, _request, pk):
+        race_time = self.get_race_time(pk)
+        serializer = RaceTimesSerializer(race_time)
+        return Response(serializer.data)
+
+    def put(self, request, pk):
+        race_time = self.get_race_time(pk)
+        race_time = RaceTime.objects.get(pk=pk)
+        serializer = RaceTimesSerializer(race_time, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+
+        return Response(serializer.errors, status=422)
+
+    def delete(self, _request, pk):
+        race_time = self.get_race_time(pk)
+        race_time = RaceTime.objects.get(pk=pk)
+        race_time.delete()
+        return Response(status=204)
 
 class CrewListView(APIView): # extend the APIView
 
     def get(self, _request):
-        crews = Crew.objects.all() # get all the crews
+        crews = Crew.objects.exclude(status='Withdrawn') # get all the crews
         serializer = CrewSerializer(crews, many=True)
 
         return Response(serializer.data) # send the JSON to the client
@@ -140,8 +186,9 @@ class EventDataImport(APIView):
 class CrewDataImport(APIView):
 
     def get(self, _request):
-        # Start by deleting all existing crews
+        # Start by deleting all existing crews and times
         Crew.objects.all().delete()
+        RaceTime.objects.all().delete()
 
         Meeting = os.getenv("MEETING2018") # Competition Meeting API from the Information --> API Key menu
         UserAPI = os.getenv("USERAPI") # As supplied in email
