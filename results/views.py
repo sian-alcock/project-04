@@ -141,7 +141,7 @@ class CrewDataImport(APIView):
 
     def get(self, _request):
         # Start by deleting all existing crews
-        # Crew.objects.all().delete()
+        Crew.objects.all().delete()
 
         Meeting = os.getenv("MEETING2018") # Competition Meeting API from the Information --> API Key menu
         UserAPI = os.getenv("USERAPI") # As supplied in email
@@ -151,16 +151,28 @@ class CrewDataImport(APIView):
         request = {'api_key':UserAPI, 'meetingIdentifier':Meeting}
         url = 'https://webapi.britishrowing.org/api/OE2CrewInformation' # change ENDPOINTNAME for the needed endpoint eg OE2MeetingSetup
 
-        # OE2CrewInformation
-        # OE2ClubInformation
-        # OE2MeetingSetup
-
         r = requests.post(url, json=request, headers=header)
         if r.status_code == 200:
             # pprint(r.json())
 
             for crew in r.json()['crews']:
-                Crew.objects.get_or_create(name=crew['name'], id=crew['id'], composite_code=crew['compositeCode'], club_id=crew['clubId'], rowing_CRI=crew['rowingCRI'], rowing_CRI_max=crew['rowingCRIMax'], sculling_CRI=crew['scullingCRI'], sculling_CRI_max=crew['scullingCRIMax'], event_id=crew['eventId'], status=crew['status'],)
+
+                data = {
+                    'name': crew['name'],
+                    'id': crew['id'],
+                    'composite_code': crew['compositeCode'],
+                    'club_id': crew['clubId'],
+                    'rowing_CRI': crew['rowingCRI'],
+                    'rowing_CRI_max': crew['rowingCRIMax'],
+                    'sculling_CRI': crew['scullingCRI'],
+                    'sculling_CRI_max': crew['scullingCRIMax'],
+                    'event_id': crew['eventId'],
+                    'status': crew['status'],
+                }
+
+                serializer = WriteCrewSerializer(data=data)
+                serializer.is_valid(raise_exception=True)
+                serializer.save()
 
             crews = Crew.objects.all()
             serializer = WriteCrewSerializer(crews, many=True)
@@ -170,6 +182,8 @@ class CrewDataImport(APIView):
 
 
 class CrewRaceTimesImport(APIView):
+    # Start by deleting all existing crews
+    RaceTime.objects.all().delete()
 
     def get(self, _request):
 
