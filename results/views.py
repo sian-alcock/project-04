@@ -63,7 +63,7 @@ class CrewDataImport(APIView):
         # Start by deleting all existing crews
         Crew.objects.all().delete()
 
-        Meeting = os.getenv("MEETING") # Competition Meeting API from the Information --> API Key menu
+        Meeting = os.getenv("MEETING2018") # Competition Meeting API from the Information --> API Key menu
         UserAPI = os.getenv("USERAPI") # As supplied in email
         UserAuth = os.getenv("USERAUTH") # As supplied in email
 

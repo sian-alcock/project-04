@@ -1,0 +1,161 @@
+[
+{
+  "model": "results.club",
+  "pk": 228,
+  "fields": {
+    "name": "York, University of, Boat Club",
+    "abbreviation": "York Univ",
+    "index_code": "UYO",
+    "colours": "Black & Gold with White Rose Logo",
+    "blade_image": "https://clubimages.britishrowing.org/blades?id=228"
+  }
+},
+{
+  "model": "results.club",
+  "pk": 289,
+  "fields": {
+    "name": "Barnes Bridge Ladies Rowing Club",
+    "abbreviation": "Barnes Bridge Ladies",
+    "index_code": "BBL",
+    "colours": "White with Blue",
+    "blade_image": "https://clubimages.britishrowing.org/blades?id=289"
+  }
+},
+{
+  "model": "results.club",
+  "pk": 455,
+  "fields": {
+    "name": "Cambridge 99 Rowing Club",
+    "abbreviation": "Cambridge 99",
+    "index_code": "CNN",
+    "colours": "Sky Blue, Green, Old Gold",
+    "blade_image": "https://clubimages.britishrowing.org/blades?id=455"
+  }
+},
+{
+  "model": "results.event",
+  "pk": 152158,
+  "fields": {
+    "name": "2-",
+    "override_name": "Op 2-",
+    "info": null,
+    "type": "Senior",
+    "gender": "Open"
+  }
+},
+{
+  "model": "results.event",
+  "pk": 152219,
+  "fields": {
+    "name": "Mx.MasK.2x",
+    "override_name": "Mx MasK 2x",
+    "info": null,
+    "type": "Master",
+    "gender": "Mixed"
+  }
+},
+{
+  "model": "results.event",
+  "pk": 152220,
+  "fields": {
+    "name": "2x",
+    "override_name": "Op Supported Adaptive 2x",
+    "info": null,
+    "type": "Senior",
+    "gender": "Open"
+  }
+},
+{
+  "model": "results.crew",
+  "pk": 1073118,
+  "fields": {
+    "name": "MAA/QBC",
+    "composite_code": "MAA/QBC",
+    "club_id": 228,
+    "rowing_CRI": 481,
+    "rowing_CRI_max": 521,
+    "sculling_CRI": 229,
+    "sculling_CRI_max": 229,
+    "event_id": 152158,
+    "status": "Accepted",
+    "penalty": 0,
+    "handicap": 0,
+    "manual_override_time": null,
+    "bib_number": null
+  }
+},
+{
+  "model": "results.crew",
+  "pk": 1074213,
+  "fields": {
+    "name": "BNT-SARGENT",
+    "composite_code": "xx",
+    "club_id": 289,
+    "rowing_CRI": 82,
+    "rowing_CRI_max": 96,
+    "sculling_CRI": 71,
+    "sculling_CRI_max": 76,
+    "event_id": 152219,
+    "status": "Accepted",
+    "penalty": 0,
+    "handicap": 0,
+    "manual_override_time": null,
+    "bib_number": null
+  }
+},
+{
+  "model": "results.racetime",
+  "pk": 1,
+  "fields": {
+    "sequence": 207,
+    "bib_number": 219,
+    "tap": "Start",
+    "time_tap": 5951770,
+    "crew_id": 1074213
+  }
+},
+{
+  "model": "results.racetime",
+  "pk": 2,
+  "fields": {
+    "sequence": 207,
+    "bib_number": 219,
+    "tap": "Finish",
+    "time_tap": 7034660,
+    "crew_id": 1074213
+  }
+},
+{
+  "model": "results.racetime",
+  "pk": 3,
+  "fields": {
+    "sequence": 202,
+    "bib_number": null,
+    "tap": "Finish",
+    "time_tap": 6949220,
+    "crew_id": null
+  }
+},
+{
+  "model": "results.racetime",
+  "pk": 4,
+  "fields": {
+    "sequence": 205,
+    "bib_number": 217,
+    "tap": "Start",
+    "time_tap": 5925780,
+    "crew_id": 1073118
+  }
+},
+{
+  "model": "results.racetime",
+  "pk": 5,
+  "fields": {
+    "sequence": 196,
+    "bib_number": null,
+    "tap": "Finish",
+    "time_tap": 6886370,
+    "crew_id": null
+  }
+}
+]

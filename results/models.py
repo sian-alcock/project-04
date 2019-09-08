@@ -2,10 +2,10 @@ from django.db import models
 
 class Club(models.Model):
     id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=30)
-    abbreviation = models.CharField(max_length=5, blank=True, null=True)
+    name = models.CharField(max_length=50)
+    abbreviation = models.CharField(max_length=20, blank=True, null=True)
     index_code = models.CharField(max_length=5, blank=True, null=True)
-    colours = models.CharField(max_length=50, blank=True, null=True)
+    colours = models.CharField(max_length=100, blank=True, null=True)
     blade_image = models.CharField(max_length=200, blank=True, null=True)
 
 class Event(models.Model):
@@ -14,13 +14,12 @@ class Event(models.Model):
     override_name = models.CharField(max_length=30, blank=True, null=True)
     info = models.CharField(max_length=30, blank=True, null=True)
     type = models.CharField(max_length=30, blank=True, null=True)
-    event_bands = models.CharField(max_length=30, blank=True, null=True)
     gender = models.CharField(max_length=20, blank=True, null=True)
 
 class Crew(models.Model):
     name = models.CharField(max_length=50)
     id = models.IntegerField(primary_key=True)
-    composite_code = models.CharField(max_length=10)
+    composite_code = models.CharField(max_length=10, blank=True, null=True)
     club_id = models.ForeignKey(Club, related_name='crews',
     on_delete=models.CASCADE)
     rowing_CRI = models.IntegerField(blank=True, null=True)
