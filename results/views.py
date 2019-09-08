@@ -6,8 +6,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 # from pprint import pprint
 
-from .serializers import CrewSerializer, WriteStartTimesSerializer, StartTimesSerializer, WriteCrewSerializer
-from .models import Crew, StartTime
+from .serializers import CrewSerializer, WriteRaceTimesSerializer, RaceTimesSerializer, WriteCrewSerializer
+from .models import Crew, RaceTime
 
 
 class CrewListView(APIView): # extend the APIView
@@ -60,6 +60,8 @@ class CrewDetailView(APIView): # extend the APIView
 class CrewDataImport(APIView):
 
     def get(self, _request):
+        # Start by deleting all existing crews
+        Crew.objects.all().delete()
 
         Meeting = os.getenv("MEETING") # Competition Meeting API from the Information --> API Key menu
         UserAPI = os.getenv("USERAPI") # As supplied in email
@@ -88,12 +90,12 @@ class CrewDataImport(APIView):
         return Response(status=400)
 
 
-class CrewStartRaceTimes(APIView):
+class CrewRaceTimes(APIView):
 
     def get(self, _request):
 
         script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
-        rel_path = "csv/start_times.csv"
+        rel_path = "csv/race_times.csv"
         abs_file_path = os.path.join(script_dir, rel_path)
 
         with open(abs_file_path, newline='') as f:
@@ -114,12 +116,13 @@ class CrewStartRaceTimes(APIView):
                         'bib_number': row[1],
                         'tap': row[3],
                         'time_tap': row[4],
+                        'crew_id':row[8]
                     }
-                    serializer = WriteStartTimesSerializer(data=data)
+                    serializer = WriteRaceTimesSerializer(data=data)
                     serializer.is_valid(raise_exception=True)
                     serializer.save()
 
-            start_times = StartTime.objects.all()
+            race_times = RaceTime.objects.all()
 
-            serializer = StartTimesSerializer(start_times, many=True)
+            serializer = RaceTimesSerializer(race_times, many=True)
             return Response(serializer.data)
