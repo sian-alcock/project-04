@@ -33,6 +33,17 @@
   }
 },
 {
+  "model": "results.club",
+  "pk": 999999,
+  "fields": {
+    "name": "Unknown",
+    "abbreviation": "Unknown",
+    "index_code": "XXX",
+    "colours": "Unknown",
+    "blade_image": "Unknown"
+  }
+},
+{
   "model": "results.event",
   "pk": 152158,
   "fields": {
@@ -63,6 +74,36 @@
     "info": null,
     "type": "Senior",
     "gender": "Open"
+  }
+},
+{
+  "model": "results.event",
+  "pk": 999999,
+  "fields": {
+    "name": "Unknown",
+    "override_name": "Unknown",
+    "info": "Unknown",
+    "type": "Unknown",
+    "gender": "Unknown"
+  }
+},
+{
+  "model": "results.crew",
+  "pk": 999999,
+  "fields": {
+    "name": "Unknown",
+    "composite_code": "Unknown",
+    "club_id": 999999,
+    "rowing_CRI": null,
+    "rowing_CRI_max": null,
+    "sculling_CRI": null,
+    "sculling_CRI_max": null,
+    "event_id": 999999,
+    "status": "Unknown",
+    "penalty": 0,
+    "handicap": 0,
+    "manual_override_time": null,
+    "bib_number": null
   }
 },
 {
