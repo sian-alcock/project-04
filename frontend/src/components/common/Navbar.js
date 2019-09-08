@@ -53,7 +53,8 @@ class Navbar extends React.Component {
             <div className="navbar-start">
               <Link to="/" className="navbar-item">
                 <img src={image} alt="Pairs Head Results" /></Link>
-              <Link to="/crews" className="navbar-item">Racing crews</Link>
+              <Link to="/crews" className="navbar-item">All crews</Link>
+              <Link to="/race-times" className="navbar-item">Race times</Link>
             </div>
           </div>
         </div>

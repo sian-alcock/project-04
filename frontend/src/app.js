@@ -8,6 +8,8 @@ import { HashRouter, Route, Switch } from 'react-router-dom'
 import Home from './components/pages/Home'
 import CrewIndex from './components/crews/CrewIndex'
 import CrewEdit from './components/crews/CrewEdit'
+import RaceTimeIndex from './components/crews/RaceTimeIndex'
+import RaceTimeEdit from './components/crews/RaceTimeEdit'
 import Navbar from './components/common/Navbar'
 
 
@@ -28,6 +30,8 @@ class App extends React.Component {
           <Switch>
             <Route path="/crews/:id" component={CrewEdit} />
             <Route path="/crews" component={CrewIndex} />
+            <Route path="/race-times" component={RaceTimeIndex} />
+            <Route path="/race-times/:id" component={RaceTimeEdit} />
             <Route path="/" component={Home} />
           </Switch>
         </HashRouter>

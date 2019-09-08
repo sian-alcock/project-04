@@ -26,7 +26,7 @@ class RaceTimeListView(APIView): # extend the APIView
         return Response(serializer.errors, status=422)
 
 
-class CrewDetailView(APIView): # extend the APIView
+class RaceTimeDetailView(APIView):
 
     def get_race_time(self, pk):
         try:
@@ -59,7 +59,7 @@ class CrewDetailView(APIView): # extend the APIView
 class CrewListView(APIView): # extend the APIView
 
     def get(self, _request):
-        crews = Crew.objects.exclude(status='Withdrawn') # get all the crews
+        crews = Crew.objects.exclude(status='Withdrawn').exclude(status='Submitted') # get all the crews
         serializer = CrewSerializer(crews, many=True)
 
         return Response(serializer.data) # send the JSON to the client
