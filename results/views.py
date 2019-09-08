@@ -6,8 +6,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 # from pprint import pprint
 
-from .serializers import CrewSerializer, WriteRaceTimesSerializer, RaceTimesSerializer, WriteCrewSerializer
-from .models import Crew, RaceTime
+from .serializers import CrewSerializer, WriteRaceTimesSerializer, RaceTimesSerializer, WriteCrewSerializer, WriteClubSerializer, ClubSerializer, EventSerializer
+from .models import Club, Event, Crew, RaceTime
 
 
 class CrewListView(APIView): # extend the APIView
@@ -57,11 +57,90 @@ class CrewDetailView(APIView): # extend the APIView
         crew.delete()
         return Response(status=204)
 
+class ClubDataImport(APIView):
+
+    def get(self, _request):
+        # Start by deleting all existing clubs
+        # Club.objects.all().delete()
+
+        Meeting = os.getenv("MEETING2018") # Competition Meeting API
+        UserAPI = os.getenv("USERAPI") # As supplied in email
+        UserAuth = os.getenv("USERAUTH") # As supplied in email
+
+        header = {'Authorization':UserAuth}
+        request = {'api_key':UserAPI, 'meetingIdentifier':Meeting}
+        url = 'https://webapi.britishrowing.org/api/OE2ClubInformation' # change ENDPOINTNAME for the needed endpoint eg OE2MeetingSetup
+
+        # OE2CrewInformation
+        # OE2ClubInformation
+        # OE2MeetingSetup
+
+        r = requests.post(url, json=request, headers=header)
+        if r.status_code == 200:
+            # pprint(r.json())
+
+            for data in r.json():
+                data = {
+                    'name': 'name',
+                    'id': 'id',
+                    'abbreviation': 'abbreviation',
+                    'index_code': 'indexCode',
+                    'colours': 'colours',
+                    'blade_image': 'bladeImage',
+                }
+                serializer = WriteClubSerializer(data=data)
+                serializer.is_valid(raise_exception=True)
+                serializer.save()
+
+            clubs = Club.objects.all()
+            serializer = ClubSerializer(clubs, many=True)
+            return Response(serializer.data)
+
+        return Response(status=400)
+
+class EventDataImport(APIView):
+
+    def get(self, _request):
+        # Start by deleting all existing clubs
+        # Event.objects.all().delete()
+
+        Meeting = os.getenv("MEETING2018") # Competition Meeting API
+        UserAPI = os.getenv("USERAPI") # As supplied in email
+        UserAuth = os.getenv("USERAUTH") # As supplied in email
+
+        header = {'Authorization':UserAuth}
+        request = {'api_key':UserAPI, 'meetingIdentifier':Meeting}
+        url = 'https://webapi.britishrowing.org/api/OE2MeetingSetup' # change ENDPOINTNAME for the needed endpoint eg OE2MeetingSetup
+
+        r = requests.post(url, json=request, headers=header)
+        if r.status_code == 200:
+            # pprint(r.json())
+
+            for event in r.json()['events']:
+                data = {
+                    'name': event['name'],
+                    'id': event['id'],
+                    'override_name': event['overrideName'],
+                    'info': event['info'],
+                    'type': event['type'],
+                    'gender': event['gender'],
+                }
+
+                serializer = EventSerializer(data=data)
+                serializer.is_valid(raise_exception=True)
+                serializer.save()
+
+            events = Event.objects.all()
+            serializer = EventSerializer(events, many=True)
+            return Response(serializer.data)
+
+        return Response(status=400)
+
 class CrewDataImport(APIView):
 
     def get(self, _request):
         # Start by deleting all existing crews
-        Crew.objects.all().delete()
+        # Crew.objects.all().delete()
 
         Meeting = os.getenv("MEETING2018") # Competition Meeting API from the Information --> API Key menu
         UserAPI = os.getenv("USERAPI") # As supplied in email
@@ -78,7 +157,6 @@ class CrewDataImport(APIView):
         r = requests.post(url, json=request, headers=header)
         if r.status_code == 200:
             # pprint(r.json())
-
 
             for crew in r.json()['crews']:
                 Crew.objects.get_or_create(name=crew['name'], id=crew['id'], composite_code=crew['compositeCode'], club_id=crew['clubId'], rowing_CRI=crew['rowingCRI'], rowing_CRI_max=crew['rowingCRIMax'], sculling_CRI=crew['scullingCRI'], sculling_CRI_max=crew['scullingCRIMax'], event_id=crew['eventId'], status=crew['status'],)

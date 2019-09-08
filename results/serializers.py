@@ -1,7 +1,17 @@
 import re
 from rest_framework import serializers
-from .models import Crew, RaceTime
+from .models import Club, Event, Crew, RaceTime
 
+
+class EventSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Event
+        fields = ('id', 'name', 'override_name', 'info', 'type', 'gender',)
+
+class ClubSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Club
+        fields = ('id', 'name', 'abbreviation', 'index_code', 'colours', 'blade_image',)
 
 class TimeSerializer(serializers.ModelSerializer):
 
@@ -50,14 +60,10 @@ class WriteRaceTimesSerializer(serializers.ModelSerializer):
 
     def validate_crew_id(self, value):
         # relies on there being a crew with id 999999 = unknown
-        # if the crew Id is blank, then assign it to crew 999999
-        # if value == '':
-        #     value = value = Crew.objects.get(pk=999999)
 
-        # else:
-            # if crew_id not found, set to crew 999999
         try:
             value = Crew.objects.get(pk=int(value))
+        # if crew_id not found, set to crew 999999
 
         except Crew.DoesNotExist:
             value = Crew.objects.get(pk=999999)
@@ -69,3 +75,18 @@ class RaceTimesSerializer(serializers.ModelSerializer):
     class Meta:
         model = RaceTime
         fields = ('id', 'sequence', 'bib_number', 'tap', 'time_tap', 'crew_id',)
+
+class WriteClubSerializer(serializers.ModelSerializer):
+
+    # id = serializers.CharField(max_length=10)
+
+    class Meta:
+        model = Club
+        fields = ('id', 'name', 'abbreviation', 'index_code', 'colours', 'blade_image',)
+
+    def validate_id(self, value):
+
+        if not isinstance(value, int):
+            raise serializers.ValidationError({'id': 'Problem with ID'})
+
+        return value
