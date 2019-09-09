@@ -37,6 +37,32 @@ class Crew(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def raw_time(self):
+        start = self.times.get(tap='Start').time_tap
+        end = self.times.get(tap='Finish').time_tap
+        return end - start
+
+    @property
+    def start_time(self):
+        start = self.times.get(tap='Start').time_tap
+        return start
+
+    @property
+    def finish_time(self):
+        finish = self.times.get(tap='Finish').time_tap
+        return finish
+
+    @property
+    def start_sequence(self):
+        sequence = self.times.get(tap='Start').sequence
+        return sequence
+
+    @property
+    def finish_sequence(self):
+        sequence = self.times.get(tap='Finish').sequence
+        return sequence
+
 class RaceTime(models.Model):
     sequence = models.IntegerField()
     bib_number = models.IntegerField(blank=True, null=True,)
@@ -44,7 +70,3 @@ class RaceTime(models.Model):
     time_tap = models.BigIntegerField()
     crew = models.ForeignKey(Crew, related_name='times',
     on_delete=models.SET_NULL, blank=True, null=True,)
-
-    # @property
-    # def raw_time(self):
-    #     return finish_time - start_time

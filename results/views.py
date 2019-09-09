@@ -146,7 +146,7 @@ class EventDataImport(APIView):
 
     def get(self, _request):
         # Start by deleting all existing events
-        # Event.objects.all().delete()
+        Event.objects.all().delete()
         #
         # Event.objects.create('id'=999999, 'name'='Unknown', 'override_name'='Unknown',
         # 'info'='Unknown', 'type'='Unknown', 'gender'='Unknown',)
@@ -242,15 +242,6 @@ class CrewRaceTimesImport(APIView):
             next(reader) # skips the first row
 
             for row in reader:
-
-                # if row[1] == '':
-                #     row[1] = None
-                #
-                # if row[3] == '':
-                #     row[3] = None
-                #
-                # if row[8] == '':
-                #     row[8] = 999999
 
                 if row:
                     data = {

@@ -63,10 +63,10 @@ class ResultIndex extends React.Component {
                   <td><Link to={`/crews/${crew.id}`}>{crew.name}</Link></td>
                   <td>{crew.id}</td>
                   <td>{crew.composite_code}</td>
-                  <td>{crew.club_id}</td>
+                  <td>{crew.club}</td>
                   <td>{crew.penalty}</td>
                   <td>{crew.handicap}</td>
-                  <td>{crew.event_id}</td>
+                  <td>{crew.event}</td>
                   <td>startseq</td>
                   <td>starttime</td>
                   <td>finishseq</td>

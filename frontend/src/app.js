@@ -15,7 +15,7 @@ import Navbar from './components/common/Navbar'
 
 
 // import 'react-toastify/dist/ReactToastify.css'
-// import '@fortawesome/fontawesome-free/js/all.js'
+import '@fortawesome/fontawesome-free/js/all.js'
 import 'bulma'
 import './style.scss'
 

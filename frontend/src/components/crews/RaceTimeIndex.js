@@ -46,7 +46,7 @@ class RaceTimeIndex extends React.Component {
             <tbody>
               {this.state.race_times.map(raceTime =>
                 <tr key={raceTime.id}>
-                  <td><Link to={`/race_time/${raceTime.crew_id}`}>{raceTime.crew_id}</Link></td>
+                  <td><Link to={`/race_time/${raceTime.crew}`}>{raceTime.crew}</Link></td>
                   <td>{raceTime.name}</td>
                   <td>{raceTime.sequence}</td>
                   <td>{raceTime.bib_number}</td>
