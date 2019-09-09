@@ -30,12 +30,12 @@ class CrewSerializer(serializers.ModelSerializer):
 
 class WriteCrewSerializer(serializers.ModelSerializer):
 
-    club_id = serializers.CharField(max_length=20)
-    event_id = serializers.CharField(max_length=20)
+    # club = serializers.CharField(max_length=20)
+    # event = serializers.CharField(max_length=20)
 
     class Meta:
         model = Crew
-        fields = ('id', 'name', 'composite_code', 'club_id', 'rowing_CRI', 'rowing_CRI_max', 'sculling_CRI', 'sculling_CRI_max', 'event_id', 'status', 'penalty', 'handicap', 'manual_override_time',)
+        fields = ('id', 'name', 'composite_code', 'club', 'rowing_CRI', 'rowing_CRI_max', 'sculling_CRI', 'sculling_CRI_max', 'event', 'status', 'penalty', 'handicap', 'manual_override_time',)
 
     def validate_club_id(self, value):
         # relies on there being a club with id 999999 = unknown
@@ -62,11 +62,10 @@ class WriteCrewSerializer(serializers.ModelSerializer):
 class WriteRaceTimesSerializer(serializers.ModelSerializer):
 
     time_tap = serializers.CharField(max_length=20)
-    crew_id = serializers.CharField(max_length=10)
 
     class Meta:
         model = RaceTime
-        fields = ('id', 'sequence', 'bib_number', 'tap', 'time_tap', 'crew_id',)
+        fields = ('id', 'sequence', 'bib_number', 'tap', 'time_tap', 'crew',)
 
     def validate_time_tap(self, value):
         # if time tap format is mm:ss.ms (eg 58:13.04), then add 0: at front
@@ -83,23 +82,23 @@ class WriteRaceTimesSerializer(serializers.ModelSerializer):
 
         return value
 
-    def validate_crew_id(self, value):
-        # relies on there being a crew with id 999999 = unknown
-
-        try:
-            value = Crew.objects.get(pk=int(value))
-        # if crew_id not found, set to crew 999999
-
-        except Crew.DoesNotExist:
-            value = Crew.objects.get(pk=999999)
-
-        return value
+    # def validate_crew_id(self, value):
+    #     # relies on there being a crew with id 999999 = unknown
+    #
+    #     try:
+    #         value = Crew.objects.get(pk=int(value))
+    #     # if crew_id not found, set to crew 999999
+    #
+    #     except Crew.DoesNotExist:
+    #         value = Crew.objects.get(pk=999999)
+    #
+    #     return value
 
 class RaceTimesSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = RaceTime
-        fields = ('id', 'sequence', 'bib_number', 'tap', 'time_tap', 'crew_id',)
+        fields = ('id', 'sequence', 'bib_number', 'tap', 'time_tap', 'crew',)
 
 class WriteClubSerializer(serializers.ModelSerializer):
 

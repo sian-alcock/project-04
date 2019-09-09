@@ -20,13 +20,13 @@ class Crew(models.Model):
     name = models.CharField(max_length=50)
     id = models.IntegerField(primary_key=True)
     composite_code = models.CharField(max_length=10, blank=True, null=True)
-    club_id = models.ForeignKey(Club, related_name='crews',
+    club = models.ForeignKey(Club, related_name='crews',
     on_delete=models.CASCADE)
     rowing_CRI = models.IntegerField(blank=True, null=True)
     rowing_CRI_max = models.IntegerField(blank=True, null=True)
     sculling_CRI = models.IntegerField(blank=True, null=True)
     sculling_CRI_max = models.IntegerField(blank=True, null=True)
-    event_id = models.ForeignKey(Event, related_name='crews',
+    event = models.ForeignKey(Event, related_name='crews',
     on_delete=models.CASCADE)
     status = models.CharField(max_length=20)
     penalty = models.IntegerField(default=0)
@@ -42,7 +42,7 @@ class RaceTime(models.Model):
     bib_number = models.IntegerField(blank=True, null=True,)
     tap = models.CharField(max_length=10)
     time_tap = models.BigIntegerField()
-    crew_id = models.ForeignKey(Crew, related_name='times',
+    crew = models.ForeignKey(Crew, related_name='times',
     on_delete=models.SET_NULL, blank=True, null=True,)
 
     # @property

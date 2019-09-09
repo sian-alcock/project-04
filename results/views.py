@@ -208,12 +208,12 @@ class CrewDataImport(APIView):
                     'name': crew['name'],
                     'id': crew['id'],
                     'composite_code': crew['compositeCode'],
-                    'club_id': crew['clubId'],
+                    'club': crew['clubId'],
                     'rowing_CRI': crew['rowingCRI'],
                     'rowing_CRI_max': crew['rowingCRIMax'],
                     'sculling_CRI': crew['scullingCRI'],
                     'sculling_CRI_max': crew['scullingCRIMax'],
-                    'event_id': crew['eventId'],
+                    'event': crew['eventId'],
                     'status': crew['status'],
                 }
 
@@ -230,10 +230,9 @@ class CrewDataImport(APIView):
 
 class CrewRaceTimesImport(APIView):
     # Start by deleting all existing crews
-    RaceTime.objects.all().delete()
 
     def get(self, _request):
-
+        RaceTime.objects.all().delete()
         script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
         rel_path = "csv/race_times.csv"
         abs_file_path = os.path.join(script_dir, rel_path)
@@ -244,22 +243,22 @@ class CrewRaceTimesImport(APIView):
 
             for row in reader:
 
-                if row[1] == '':
-                    row[1] = None
-
-                if row[3] == '':
-                    row[3] = None
-
-                if row[8] == '':
-                    row[8] = 999999
+                # if row[1] == '':
+                #     row[1] = None
+                #
+                # if row[3] == '':
+                #     row[3] = None
+                #
+                # if row[8] == '':
+                #     row[8] = 999999
 
                 if row:
                     data = {
                         'sequence': row[0],
-                        'bib_number': row[1],
-                        'tap': row[3],
+                        'bib_number': row[1] or None,
+                        'tap': row[3] or None,
                         'time_tap': row[4],
-                        'crew_id':row[8]
+                        'crew':row[8] or None
                     }
                     serializer = WriteRaceTimesSerializer(data=data)
                     serializer.is_valid(raise_exception=True)

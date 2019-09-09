@@ -55,6 +55,7 @@ class Navbar extends React.Component {
                 <img src={image} alt="Pairs Head Results" /></Link>
               <Link to="/crews" className="navbar-item">All crews</Link>
               <Link to="/race-times" className="navbar-item">Race times</Link>
+              <Link to="/results" className="navbar-item">Results</Link>
             </div>
           </div>
         </div>

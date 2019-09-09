@@ -10,6 +10,7 @@ import CrewIndex from './components/crews/CrewIndex'
 import CrewEdit from './components/crews/CrewEdit'
 import RaceTimeIndex from './components/crews/RaceTimeIndex'
 import RaceTimeEdit from './components/crews/RaceTimeEdit'
+import ResultIndex from './components/crews/ResultIndex'
 import Navbar from './components/common/Navbar'
 
 
@@ -32,6 +33,7 @@ class App extends React.Component {
             <Route path="/crews" component={CrewIndex} />
             <Route path="/race-times" component={RaceTimeIndex} />
             <Route path="/race-times/:id" component={RaceTimeEdit} />
+            <Route path="/results" component={ResultIndex} />
             <Route path="/" component={Home} />
           </Switch>
         </HashRouter>
