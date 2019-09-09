@@ -1,11 +1,9 @@
 import React from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
-const moment = require('moment')
-const momentDurationFormatSetup = require('moment-duration-format')
-momentDurationFormatSetup(moment)
-typeof moment.duration.fn.format === 'function'
-typeof moment.duration.format === 'function'
+
+import { formatTimes } from '../../../lib/helpers'
+
 const _ = require('lodash').runInContext()
 
 
@@ -20,7 +18,7 @@ class CrewIndex extends React.Component {
       crewsWithoutFinishTimeBoolean: false
     }
 
-    this.formatTimes = this.formatTimes.bind(this)
+    // this.formatTimes = this.formatTimes.bind(this)
     this.handleSearchKeyUp = this.handleSearchKeyUp.bind(this)
     this.handleSortChange = this.handleSortChange.bind(this)
     this.combineFiltersAndSort = this.combineFiltersAndSort.bind(this)
@@ -36,11 +34,6 @@ class CrewIndex extends React.Component {
         { crews: res.data, crewsToDisplay: res.data },
         () => this.combineFiltersAndSort(this.state.crews))
       )
-  }
-
-  formatTimes(timeInMs) {
-    const duration = moment.duration(timeInMs).format('h:mm:ss.SS')
-    return duration
   }
 
   getNumCrewsWithoutStartTimes(){
@@ -199,9 +192,9 @@ class CrewIndex extends React.Component {
                   <td>{crew.finish_sequence ? crew.finish_sequence : '⚠️'}</td>
                   <td>{crew.penalty}</td>
                   <td>{crew.handicap}</td>
-                  <td>{crew.start_time ? this.formatTimes(crew.start_time) : '⚠️'}</td>
-                  <td>{crew.finish_time ? this.formatTimes(crew.finish_time) : '⚠️'}</td>
-                  <td>{crew.raw_time ? this.formatTimes(crew.raw_time) : '⚠️'}</td>
+                  <td>{crew.start_time ? formatTimes(crew.start_time) : '⚠️'}</td>
+                  <td>{crew.finish_time ? formatTimes(crew.finish_time) : '⚠️'}</td>
+                  <td>{crew.raw_time ? formatTimes(crew.raw_time) : '⚠️'}</td>
                   <td>pos?</td>
                 </tr>
               )}
