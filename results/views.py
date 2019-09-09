@@ -9,6 +9,22 @@ from rest_framework.response import Response
 from .serializers import CrewSerializer, WriteRaceTimesSerializer, RaceTimesSerializer, WriteCrewSerializer, WriteClubSerializer, ClubSerializer, EventSerializer
 from .models import Club, Event, Crew, RaceTime
 
+class ClubListView(APIView): # extend the APIView
+
+    def get(self, _request):
+        clubs = Club.objects.all() # get all the clubs
+        serializer = ClubSerializer(clubs, many=True)
+
+        return Response(serializer.data) # send the JSON to the client
+
+class EventListView(APIView): # extend the APIView
+
+    def get(self, _request):
+        events = Event.objects.all() # get all the clubs
+        serializer = EventSerializer(events, many=True)
+
+        return Response(serializer.data) # send the JSON to the client
+
 class RaceTimeListView(APIView): # extend the APIView
 
     def get(self, _request):

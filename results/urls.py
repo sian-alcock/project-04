@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import CrewListView, CrewDetailView, RaceTimeListView, RaceTimeDetailView, CrewRaceTimesImport, CrewDataImport, EventDataImport, ClubDataImport
+from .views import CrewListView, CrewDetailView, RaceTimeListView, RaceTimeDetailView, CrewRaceTimesImport, ClubListView, EventListView, CrewDataImport, EventDataImport, ClubDataImport
 
 urlpatterns = [
     path('crews/', CrewListView.as_view()),
@@ -8,6 +8,8 @@ urlpatterns = [
     path('race-times/<int:pk>', RaceTimeDetailView.as_view()),
     path('crew-race-times/', CrewRaceTimesImport.as_view()),
     path('results/', CrewListView.as_view()),
+    path('clubs/', ClubListView.as_view()),
+    path('events/', EventListView.as_view()),
     path('crew-data-import/', CrewDataImport.as_view()),
     path('club-data-import/', ClubDataImport.as_view()),
     path('event-data-import/', EventDataImport.as_view()),

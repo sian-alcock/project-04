@@ -11,28 +11,30 @@ class CrewEdit extends React.Component {
       formData: {},
       errors: {},
       allClubs: {},
-      allEvents: {},
-      allRaceTimes: {}
+      allEvents: {}
     }
     this.handleChange = this.handleChange.bind(this)
     this.getClubs = this.getClubs.bind(this)
-    this.getStartTimes = this.getStartTimes.bind(this)
+    this.getEvents = this.getEvents.bind(this)
 
   }
-
-  // componentDidMount() {
-  //   axios.get(`/api/crews/${this.props.match.params.id}`)
-  //     .then(res => this.setState({ formData: res.data }))
-  // }
 
   componentDidMount() {
     Promise.all([
       axios.get(`/api/crews/${this.props.match.params.id}`), // i.e. axios.get(something)
-      axios.get('/api/race-times/')
-    ]).then(([res1, res2]) => {
+      axios.get('/api/clubs/'),
+      axios.get('/api/events/')
+    ]).then(([res1, res2, res3]) => {
       // console.log(res1.data, res2.data)
-      this.setState({formData: res1.data, allRaceTimes: res2.data})
+      this.setState({formData: res1.data, allClubs: res2.data, allEvents: res3.data})
     }).catch(err => this.setState({ errors: err.response.data.errors }))
+  }
+
+  handleSubmit(e) {
+    e.preventDefault()
+    axios.put(`/api/crews/${this.props.match.params.id}`, this.state.formData)
+      .then(() => this.props.history.push(`/crews/${this.props.match.params.id}`))
+      .catch(err => this.setState({ errors: err.response.data.errors }))
   }
 
   handleChange(e) {
@@ -41,23 +43,21 @@ class CrewEdit extends React.Component {
   }
 
   getClubs(){
-    const clubs = this.state.allClubs.map(club => ({value: club, label: club}))
-    console.log(clubs)
-    this.setState({ clubs })
+    const clubsArray = Array.from(this.state.allClubs).map(club => club.name)
+    const clubs = clubsArray.map(club => ({value: club, label: club}))
+    return clubs
   }
 
-  getStartTimes(){
-
-    const startTimesArray = Array.from(this.state.allRaceTimes)
-    const filteredStartTimes = startTimesArray.filter(time => time.tap === 'Start' && !time.crew).map(startTime => startTime.time_tap)
-
-    const startTimes = filteredStartTimes.map(startTime => ({value: startTime, label: startTime}))
-    return startTimes
+  getEvents(){
+    const eventsArray = Array.from(this.state.allEvents).map(event => event.name)
+    const events = eventsArray.map(event => ({value: event, label: event}))
+    return events
   }
+
 
   render() {
 
-    console.log(this.state.allRaceTimes)
+    console.log(this.state.formData)
 
     return (
       <section className="section">
@@ -84,7 +84,7 @@ class CrewEdit extends React.Component {
                 name="crew"
                 id="crew"
                 placeholder="eg: 123456"
-                value={this.state.formData.crew || ''}
+                value={this.state.formData.id || ''}
                 onChange={this.handleChange}
               />
               {this.state.errors.crew && <small className="help is-danger">{this.state.errors.crew}</small>}
@@ -92,15 +92,15 @@ class CrewEdit extends React.Component {
 
             <div className="field">
               <div className="control">
-                <label className="label" htmlFor="startTime">Start Time</label>
-                <Select id="startTime" onChange={this.handleSelect} options={this.getStartTimes()} />
+                <label className="label" htmlFor="club">Club</label>
+                <Select id="club" onChange={this.handleSelect} options={this.getClubs()}/>
               </div>
             </div>
 
             <div className="field">
               <div className="control">
-                <label className="label" htmlFor="club">Club</label>
-                <Select id="club" onChange={this.handleSelect} options={this.state.clubs} />
+                <label className="label" htmlFor="event">Event</label>
+                <Select id="event" onChange={this.handleSelect} options={this.getEvents()}  />
               </div>
             </div>
 
@@ -115,6 +115,19 @@ class CrewEdit extends React.Component {
                 onChange={this.handleChange}
               />
               {this.state.errors.penalty && <small className="help is-danger">{this.state.errors.penalty}</small>}
+            </div>
+
+            <div className="field">
+              <label className="label" htmlFor="manualOverride">Override race time</label>
+              <input
+                className="input"
+                name="manualOverride"
+                id="manualOverride"
+                placeholder="eg: 16:09.12"
+                value={this.state.formData.manual_override_time || ''}
+                onChange={this.handleChange}
+              />
+              {this.state.errors.manual_override_time && <small className="help is-danger">{this.state.errors.manual_override_time}</small>}
             </div>
 
             <div className="field">
