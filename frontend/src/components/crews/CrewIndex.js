@@ -15,12 +15,19 @@ class CrewIndex extends React.Component {
     this.state= {
       crews: [],
       searchTerm: '',
-      sortTerm: 'finish_sequence|asc'
+      sortTerm: 'finish_sequence|asc',
+      crewsWithoutStartTimeBoolean: false,
+      crewsWithoutFinishTimeBoolean: false
     }
+
     this.formatTimes = this.formatTimes.bind(this)
     this.handleSearchKeyUp = this.handleSearchKeyUp.bind(this)
     this.handleSortChange = this.handleSortChange.bind(this)
     this.combineFiltersAndSort = this.combineFiltersAndSort.bind(this)
+    this.handleCrewsWithoutStartTime = this.handleCrewsWithoutStartTime.bind(this)
+    this.handleCrewsWithoutFinishTime = this.handleCrewsWithoutFinishTime.bind(this)
+    this.getNumCrewsWithoutStartTimes = this.getNumCrewsWithoutStartTimes.bind(this)
+    this.getNumCrewsWithoutFinishTimes = this.getNumCrewsWithoutFinishTimes.bind(this)
   }
 
   componentDidMount() {
@@ -36,8 +43,15 @@ class CrewIndex extends React.Component {
     return duration
   }
 
+  getNumCrewsWithoutStartTimes(){
+    return this.state.crews.filter(crew => !crew.start_time).length
+  }
+
+  getNumCrewsWithoutFinishTimes(){
+    return this.state.crews.filter(crew => !crew.finish_time).length
+  }
+
   handleSearchKeyUp(e){
-    console.log(e.target.value)
     this.setState({
       searchTerm: e.target.value
     }, () => this.combineFiltersAndSort(this.state.crews))
@@ -47,8 +61,23 @@ class CrewIndex extends React.Component {
     this.setState({ sortTerm: e.target.value }, () => this.combineFiltersAndSort(this.state.crews))
   }
 
+  handleCrewsWithoutStartTime(e){
+    this.setState({
+      crewsWithoutStartTimeBoolean: e.target.checked
+    }, () => this.combineFiltersAndSort(this.state.crews))
+  }
+
+
+  handleCrewsWithoutFinishTime(e){
+    this.setState({
+      crewsWithoutFinishTimeBoolean: e.target.checked
+    }, () => this.combineFiltersAndSort(this.state.crews))
+  }
+
   combineFiltersAndSort(filteredCrews) {
     let filteredBySearchText
+    let filteredByCrewsWithoutStartTime
+    let filteredByCrewsWithoutFinishTime
     // Create filter based on Regular expression of the search term
     const re= new RegExp(this.state.searchTerm, 'i')
 
@@ -58,8 +87,20 @@ class CrewIndex extends React.Component {
       filteredBySearchText = this.state.crews.filter(crew => re.test(crew.name))
     }
 
+    if(this.state.crewsWithoutStartTimeBoolean) {
+      filteredByCrewsWithoutStartTime = this.state.crews.filter(crew => !crew.start_time)
+    } else {
+      filteredByCrewsWithoutStartTime = this.state.crews
+    }
+
+    if(this.state.crewsWithoutFinishTimeBoolean) {
+      filteredByCrewsWithoutFinishTime = this.state.crews.filter(crew => !crew.finish_time)
+    } else {
+      filteredByCrewsWithoutFinishTime = this.state.crews
+    }
+
     _.indexOf = _.findIndex
-    filteredCrews = _.intersection(this.state.crews,  filteredBySearchText)
+    filteredCrews = _.intersection(this.state.crews,  filteredBySearchText, filteredByCrewsWithoutStartTime, filteredByCrewsWithoutFinishTime)
 
     const [field, order] = this.state.sortTerm.split('|')
     const sortedCrews = _.orderBy(filteredCrews, [field], [order])
@@ -69,7 +110,7 @@ class CrewIndex extends React.Component {
 
   render() {
 
-    console.log(this.state.crews)
+    console.log(this.state.crewsToDisplay)
 
     return (
       <section className="section">
@@ -98,6 +139,20 @@ class CrewIndex extends React.Component {
                 <option value="event.name|desc">Event, desc</option>
               </select>
             </div>
+          </div>
+
+          <div className="field">
+            <label className="checkbox" >
+              <input type="checkbox"  className="checkboxRadio" value="crewsWithoutStartTime" onClick={this.handleCrewsWithoutStartTime} />
+              {`Crews without start time (${this.getNumCrewsWithoutStartTimes()})`}
+            </label>
+          </div>
+
+          <div className="field">
+            <label className="checkbox" >
+              <input type="checkbox"  className="checkboxRadio" value="crewsWithoutFinishTime" onClick={this.handleCrewsWithoutFinishTime} />
+              {`Crews without finish time (${this.getNumCrewsWithoutFinishTimes()})`}
+            </label>
           </div>
 
           <table className="table">
