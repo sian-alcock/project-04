@@ -12,6 +12,8 @@ import RaceTimeIndex from './components/crews/RaceTimeIndex'
 import RaceTimeEdit from './components/crews/RaceTimeEdit'
 import ResultIndex from './components/crews/ResultIndex'
 import Navbar from './components/common/Navbar'
+import Footer from './components/common/Footer'
+import Header from './components/common/Header'
 
 
 // import 'react-toastify/dist/ReactToastify.css'
@@ -27,6 +29,7 @@ class App extends React.Component {
     return(
       <div>
         <HashRouter>
+          <Header />
           <Navbar />
           <Switch>
             <Route path="/crews/:id" component={CrewEdit} />
@@ -36,6 +39,7 @@ class App extends React.Component {
             <Route path="/results" component={ResultIndex} />
             <Route path="/" component={Home} />
           </Switch>
+          <Footer />
         </HashRouter>
       </div>
     )

@@ -2,6 +2,15 @@
 
 $family-primary: 'Open Sans', sans-serif;
 $bblBlue: #341499;
-$primary: $bblBlue; 
+$primary: $bblBlue;
+
+.header {
+  margin-left: 40px;
+  margin-top: 10px;
+}
+
+.checkbox {
+  margin-right: 8px;
+}
 
 @import "~bulma"
