@@ -21,6 +21,13 @@ class RaceTimesSerializer(serializers.ModelSerializer):
 
 class CrewSerializer(serializers.ModelSerializer):
 
+    class Meta:
+        model = Crew
+        fields = ('id', 'name', 'composite_code', 'rowing_CRI', 'rowing_CRI_max', 'sculling_CRI', 'sculling_CRI_max', 'status', 'penalty', 'handicap', 'manual_override_time', 'bib_number',)
+
+
+class PopulatedCrewSerializer(serializers.ModelSerializer):
+
     club = ClubSerializer()
     event = EventSerializer()
 
@@ -89,6 +96,14 @@ class WriteRaceTimesSerializer(serializers.ModelSerializer):
         value = int(hrs)*60*60*1000 + int(mins)*60*1000 + int(secs)*1000 + int(hdths)*10
 
         return value
+
+class PopulatedRaceTimesSerializer(serializers.ModelSerializer):
+
+    crew = CrewSerializer()
+
+    class Meta:
+        model = RaceTime
+        fields = ('id', 'sequence', 'bib_number', 'tap', 'time_tap', 'crew',)
 
     # def validate_crew_id(self, value):
     #     # relies on there being a crew with id 999999 = unknown

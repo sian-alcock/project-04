@@ -38,7 +38,6 @@ class Navbar extends React.Component {
         <nav className="navbar">
           <div className="container">
             <div className="navbar-brand">
-              <Link to="/" className="navbar-item">Home</Link>
               <a
                 role="button"
                 className={`navbar-burger ${this.state.navbarOpen ? 'is-active' : ''}`}
@@ -51,6 +50,7 @@ class Navbar extends React.Component {
             </div>
             <div className={`navbar-menu ${this.state.navbarOpen ? 'is-active' : ''}`}>
               <div className="navbar-start">
+                <Link to="/" className="navbar-item">Home</Link>
                 <Link to="/crews" className="navbar-item">All crews</Link>
                 <Link to="/race-times" className="navbar-item">Race times</Link>
                 <Link to="/results" className="navbar-item">Results</Link>

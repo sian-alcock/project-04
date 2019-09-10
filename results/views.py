@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 # from pprint import pprint
 
-from .serializers import CrewSerializer, WriteRaceTimesSerializer, RaceTimesSerializer, WriteCrewSerializer, WriteClubSerializer, ClubSerializer, EventSerializer
+from .serializers import PopulatedCrewSerializer, WriteRaceTimesSerializer, RaceTimesSerializer, PopulatedRaceTimesSerializer, WriteCrewSerializer, WriteClubSerializer, ClubSerializer, EventSerializer
 from .models import Club, Event, Crew, RaceTime
 
 class ClubListView(APIView): # extend the APIView
@@ -29,12 +29,12 @@ class RaceTimeListView(APIView): # extend the APIView
 
     def get(self, _request):
         race_times = RaceTime.objects.all() # get all the crews
-        serializer = RaceTimesSerializer(race_times, many=True)
+        serializer = PopulatedRaceTimesSerializer(race_times, many=True)
 
         return Response(serializer.data) # send the JSON to the client
 
     def post(self, request):
-        serializer = RaceTimesSerializer(data=request.data)
+        serializer = PopulatedRaceTimesSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=201)
@@ -76,12 +76,12 @@ class CrewListView(APIView): # extend the APIView
 
     def get(self, _request):
         crews = Crew.objects.exclude(status='Withdrawn').exclude(status='Submitted') # get all the crews
-        serializer = CrewSerializer(crews, many=True)
+        serializer = PopulatedCrewSerializer(crews, many=True)
 
         return Response(serializer.data) # send the JSON to the client
 
     def post(self, request):
-        serializer = CrewSerializer(data=request.data)
+        serializer = PopulatedCrewSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=201)
@@ -100,13 +100,13 @@ class CrewDetailView(APIView): # extend the APIView
 
     def get(self, _request, pk):
         crew = self.get_crew(pk)
-        serializer = CrewSerializer(crew)
+        serializer = PopulatedCrewSerializer(crew)
         return Response(serializer.data)
 
     def put(self, request, pk):
         crew = self.get_crew(pk)
         crew = Crew.objects.get(pk=pk)
-        serializer = CrewSerializer(crew, data=request.data)
+        serializer = PopulatedCrewSerializer(crew, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=201)

@@ -15,7 +15,8 @@ class CrewIndex extends React.Component {
       searchTerm: '',
       sortTerm: 'finish_sequence|asc',
       crewsWithoutStartTimeBoolean: false,
-      crewsWithoutFinishTimeBoolean: false
+      crewsWithoutFinishTimeBoolean: false,
+      handleScratchedCrewsBoolean: false
     }
 
     // this.formatTimes = this.formatTimes.bind(this)
@@ -26,6 +27,8 @@ class CrewIndex extends React.Component {
     this.handleCrewsWithoutFinishTime = this.handleCrewsWithoutFinishTime.bind(this)
     this.getNumCrewsWithoutStartTimes = this.getNumCrewsWithoutStartTimes.bind(this)
     this.getNumCrewsWithoutFinishTimes = this.getNumCrewsWithoutFinishTimes.bind(this)
+    this.handleScratchedCrews = this.handleScratchedCrews.bind(this)
+    this.getNumScratchedCrews = this.getNumScratchedCrews.bind(this)
   }
 
   componentDidMount() {
@@ -37,11 +40,15 @@ class CrewIndex extends React.Component {
   }
 
   getNumCrewsWithoutStartTimes(){
-    return this.state.crews.filter(crew => !crew.start_time).length
+    return this.state.crews.filter(crew => crew.status === 'Accepted' && !crew.start_time).length
   }
 
   getNumCrewsWithoutFinishTimes(){
-    return this.state.crews.filter(crew => !crew.finish_time).length
+    return this.state.crews.filter(crew => crew.status === 'Accepted' && !crew.finish_time).length
+  }
+
+  getNumScratchedCrews(){
+    return this.state.crews.filter(crew => crew.status === 'Scratched').length
   }
 
   handleSearchKeyUp(e){
@@ -67,17 +74,25 @@ class CrewIndex extends React.Component {
     }, () => this.combineFiltersAndSort(this.state.crews))
   }
 
+  handleScratchedCrews(e){
+    this.setState({
+      scratchedCrewsBoolean: e.target.checked
+    }, () => this.combineFiltersAndSort(this.state.crews))
+  }
+
   combineFiltersAndSort(filteredCrews) {
     let filteredBySearchText
     let filteredByCrewsWithoutStartTime
     let filteredByCrewsWithoutFinishTime
+    let filteredByScratchedCrews
+
     // Create filter based on Regular expression of the search term
     const re= new RegExp(this.state.searchTerm, 'i')
 
     if(!this.state.searchTerm) {
       filteredBySearchText = this.state.crews
     } else {
-      filteredBySearchText = this.state.crews.filter(crew => re.test(crew.name))
+      filteredBySearchText = this.state.crews.filter(crew => re.test(crew.name) || re.test(crew.status) || re.test(crew.club))
     }
 
     if(this.state.crewsWithoutStartTimeBoolean) {
@@ -92,8 +107,14 @@ class CrewIndex extends React.Component {
       filteredByCrewsWithoutFinishTime = this.state.crews
     }
 
+    if(!this.state.scratchedCrewsBoolean) {
+      filteredByScratchedCrews = this.state.crews.filter(crew => crew !== 'Scratched')
+    } else {
+      filteredByScratchedCrews = this.state.crews
+    }
+
     _.indexOf = _.findIndex
-    filteredCrews = _.intersection(this.state.crews,  filteredBySearchText, filteredByCrewsWithoutStartTime, filteredByCrewsWithoutFinishTime)
+    filteredCrews = _.intersection(this.state.crews,  filteredBySearchText, filteredByCrewsWithoutStartTime, filteredByCrewsWithoutFinishTime, filteredByScratchedCrews)
 
     const [field, order] = this.state.sortTerm.split('|')
     const sortedCrews = _.orderBy(filteredCrews, [field], [order])
@@ -148,11 +169,19 @@ class CrewIndex extends React.Component {
             </label>
           </div>
 
+          <div className="field">
+            <label className="checkbox" >
+              <input type="checkbox"  className="checkbox" value="showScratchedCrews" onClick={this.handleScratchedCrews} />
+              {`Show scratched crews (${this.getNumScratchedCrews()})`}
+            </label>
+          </div>
+
           <table className="table">
             <thead>
               <tr>
                 <td>Crew ID</td>
                 <td>Crew</td>
+                <td>Status</td>
                 <td>Club</td>
                 <td>Event</td>
                 <td>Start sequence</td>
@@ -169,6 +198,7 @@ class CrewIndex extends React.Component {
               <tr>
                 <td>Crew ID</td>
                 <td>Crew</td>
+                <td>Status</td>
                 <td>Club</td>
                 <td>Event</td>
                 <td>Start sequence</td>
@@ -186,6 +216,7 @@ class CrewIndex extends React.Component {
                 <tr key={crew.id}>
                   <td><Link to={`/crews/${crew.id}`}>{crew.id}</Link></td>
                   <td>{crew.name}</td>
+                  <td>{crew.status}</td>
                   <td>{crew.club.index_code}</td>
                   <td>{crew.event.name}</td>
                   <td>{crew.start_sequence ? crew.start_sequence : '⚠️'}</td>

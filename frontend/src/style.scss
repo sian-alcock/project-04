@@ -5,12 +5,21 @@ $bblBlue: #341499;
 $primary: $bblBlue;
 
 .header {
-  margin-left: 40px;
+  margin-left: 55px;
   margin-top: 10px;
+}
+
+.navbar-item {
+  margin-left: 10px;
 }
 
 .checkbox {
   margin-right: 8px;
 }
+
+
+// .progress.active {
+//   background-image: <i className="fas fa-spinner"></i>;
+// }
 
 @import "~bulma"

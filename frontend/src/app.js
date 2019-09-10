@@ -34,8 +34,8 @@ class App extends React.Component {
           <Switch>
             <Route path="/crews/:id" component={CrewEdit} />
             <Route path="/crews" component={CrewIndex} />
-            <Route path="/race-times" component={RaceTimeIndex} />
             <Route path="/race-times/:id" component={RaceTimeEdit} />
+            <Route path="/race-times" component={RaceTimeIndex} />
             <Route path="/results" component={ResultIndex} />
             <Route path="/" component={Home} />
           </Switch>
