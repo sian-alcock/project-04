@@ -44,6 +44,11 @@ class Crew(models.Model):
         return end - start
 
     @property
+    def race_time(self):
+        # The race time can include the penalty as by default it is 0
+        return self.raw_time + self.penalty*1000
+
+    @property
     def start_time(self):
         start = self.times.get(tap='Start').time_tap
         return start
@@ -62,6 +67,7 @@ class Crew(models.Model):
     def finish_sequence(self):
         sequence = self.times.get(tap='Finish').sequence
         return sequence
+
 
 class RaceTime(models.Model):
     sequence = models.IntegerField()

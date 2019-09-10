@@ -33,6 +33,7 @@ class PopulatedCrewSerializer(serializers.ModelSerializer):
 
     times = RaceTimesSerializer(many=True)
     raw_time = serializers.IntegerField()
+    race_time = serializers.IntegerField()
     start_time = serializers.IntegerField()
     finish_time = serializers.IntegerField()
     start_sequence = serializers.IntegerField()
@@ -40,7 +41,7 @@ class PopulatedCrewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Crew
-        fields = ('id', 'name', 'composite_code', 'rowing_CRI', 'rowing_CRI_max', 'sculling_CRI', 'sculling_CRI_max', 'status', 'penalty', 'handicap', 'manual_override_time', 'bib_number', 'times', 'raw_time', 'start_time', 'finish_time', 'start_sequence', 'finish_sequence', 'event', 'club',)
+        fields = ('id', 'name', 'composite_code', 'rowing_CRI', 'rowing_CRI_max', 'sculling_CRI', 'sculling_CRI_max', 'status', 'penalty', 'handicap', 'manual_override_time', 'bib_number', 'times', 'raw_time', 'race_time', 'start_time', 'finish_time', 'start_sequence', 'finish_sequence', 'event', 'club',)
 
 
 class WriteCrewSerializer(serializers.ModelSerializer):

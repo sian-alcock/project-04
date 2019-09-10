@@ -7,7 +7,7 @@ import { HashRouter, Route, Switch } from 'react-router-dom'
 
 import Home from './components/pages/Home'
 import CrewIndex from './components/crews/CrewIndex'
-import CrewEdit from './components/crews/CrewEdit'
+import CrewTimeEdit from './components/crews/CrewTimeEdit'
 import RaceTimeIndex from './components/crews/RaceTimeIndex'
 import RaceTimeEdit from './components/crews/RaceTimeEdit'
 import ResultIndex from './components/crews/ResultIndex'
@@ -32,7 +32,7 @@ class App extends React.Component {
           <Header />
           <Navbar />
           <Switch>
-            <Route path="/crews/:id" component={CrewEdit} />
+            <Route path="/crews/:id" component={CrewTimeEdit} />
             <Route path="/crews" component={CrewIndex} />
             <Route path="/race-times/:id" component={RaceTimeEdit} />
             <Route path="/race-times" component={RaceTimeIndex} />
