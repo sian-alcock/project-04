@@ -1,28 +1,94 @@
 import React from 'react'
 import axios from 'axios'
-// import { Link } from 'react-router-dom'
+import Select from 'react-select'
+import { formatTimes } from '../../lib/helpers'
+
 
 class RaceTimeEdit extends React.Component {
   constructor() {
     super()
     this.state= {
-      race_times: []
+      formData: {},
+      crews: []
     }
+    // this.getCrews = this.getCrews.bind(this)
+
+    this.handleSelectChange = this.handleSelectChange.bind(this)
   }
 
   componentDidMount() {
-    axios.get(`/api/race-times/${this.props.match.params.id}`)
-      .then(res => this.setState({ race_times: res.data}))
+    Promise.all([
+      axios.get(`/api/race-times/${this.props.match.params.id}`), // i.e. axios.get(something)
+      axios.get('/api/crews/')
+    ]).then(([res1, res2]) => {
+      console.log(res1.data, res2.data)
+      this.setState({ formData: res1.data, crews: res2.data.map(option => {
+        return {label: option.name, value: option.id}
+      })
+      })
+    })
   }
 
+
+  handleSubmit(e) {
+    e.preventDefault()
+
+    const data = {
+      ...this.state.formData,
+      crew: this.state.formData.crew.value
+    }
+    
+    axios.put(`/api/race-times/${this.props.match.params.id}`, data)
+      .then(() => this.props.history.push(`/crews/${this.props.match.params.id}`))
+      .catch(err => this.setState({ errors: err.response.data.errors }))
+  }
+
+  handleSelectChange(selectedOption) {
+    const formData = { ...this.state.formData, crew: selectedOption }
+    this.setState({ formData })
+  }
+
+
   render() {
-
-    console.log(this.state.race_times)
-
+    if(!this.state.formData) return null
+    console.log(this.state.formData)
+    console.log('crews', this.state.crews)
+    {!this.state.crews && <h2>Loading</h2>}
     return (
       <section className="section">
         <div className="container">
-          <h1>RaceTime Edit</h1>
+          <div className="box">
+            <div className="columns is-multiline">
+
+              <div className="column is-one-third">
+                <div>Sequence: {this.state.formData.sequence}</div>
+              </div>
+
+              <div className="column is-one-third">
+                <div>Tap: {this.state.formData.tap}</div>
+              </div>
+
+              <div className="column is-one-third">
+                <div>Race time: {formatTimes(this.state.formData.time_tap)}</div>
+              </div>
+
+            </div>
+          </div>
+          <form className="container box tableBorder" onSubmit={this.handleSubmit}>
+
+            <div className="field">
+              <div className="control">
+                <label className="label" htmlFor="crew">Crew</label>
+                <Select
+                  id="crew"
+                  onChange={this.handleSelectChange}
+                  options={this.state.crews}
+                  value={this.state.formData.crew}
+                />
+              </div>
+            </div>
+            <button className="button is-primary">Submit</button>
+          </form>
         </div>
       </section>
     )

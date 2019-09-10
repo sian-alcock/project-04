@@ -2,10 +2,10 @@ from django.urls import path
 from .views import CrewListView, CrewDetailView, RaceTimeListView, RaceTimeDetailView, CrewRaceTimesImport, ClubListView, EventListView, CrewDataImport, EventDataImport, ClubDataImport
 
 urlpatterns = [
-    path('crews/', CrewListView.as_view()),
     path('crews/<int:pk>', CrewDetailView.as_view()),
-    path('race-times/', RaceTimeListView.as_view()),
+    path('crews/', CrewListView.as_view()),
     path('race-times/<int:pk>', RaceTimeDetailView.as_view()),
+    path('race-times/', RaceTimeListView.as_view()),
     path('crew-race-times/', CrewRaceTimesImport.as_view()),
     path('results/', CrewListView.as_view()),
     path('clubs/', ClubListView.as_view()),

@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 
-import { formatTimes } from '../../../lib/helpers'
+import { formatTimes } from '../../lib/helpers'
 
 const _ = require('lodash').runInContext()
 

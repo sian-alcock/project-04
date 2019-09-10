@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import { formatTimes } from '../../../lib/helpers'
+import { formatTimes } from '../../lib/helpers'
 
 class ResultIndex extends React.Component {
   constructor() {

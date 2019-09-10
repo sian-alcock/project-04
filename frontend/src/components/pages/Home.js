@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 
-import { formatTimeDate } from '../../../lib/helpers'
+import { formatTimeDate } from '../../lib/helpers'
 
 class Home extends React.Component {
   constructor() {

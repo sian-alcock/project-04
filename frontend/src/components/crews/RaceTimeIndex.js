@@ -1,7 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
-import { formatTimes } from '../../../lib/helpers'
+import { formatTimes } from '../../lib/helpers'
 const _ = require('lodash').runInContext()
 
 class RaceTimeIndex extends React.Component {
@@ -137,7 +137,8 @@ class RaceTimeIndex extends React.Component {
             <tbody>
               {this.state.raceTimesToDisplay.map(raceTime =>
                 <tr key={raceTime.id}>
-                  <td><Link to={`/race_times/${raceTime.id}`}>{raceTime.sequence}</Link></td>
+                  <td><Link to={`/race-times/${raceTime.id}`}>{raceTime.sequence}</Link></td>
+                  <td>{raceTime.sequence}</td>
                   <td>{raceTime.tap}</td>
                   <td>{formatTimes(raceTime.time_tap)}</td>
                   <td>{raceTime.crew === null ? '⚠️' : raceTime.crew.id}</td>
