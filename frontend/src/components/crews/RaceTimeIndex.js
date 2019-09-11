@@ -11,7 +11,9 @@ class RaceTimeIndex extends React.Component {
       raceTimes: [],
       raceTimesToDisplay: [],
       searchTerm: '',
-      timesWithoutCrewBoolean: false
+      timesWithoutCrewBoolean: false,
+      startTab: true,
+      finishTab: false
     }
 
     this.displayStartTimes = this.displayStartTimes.bind(this)
@@ -29,12 +31,12 @@ class RaceTimeIndex extends React.Component {
 
   displayStartTimes(){
     const startTimes = this.state.raceTimes.filter(time => time.tap === 'Start')
-    this.setState({ raceTimesToDisplay: startTimes})
+    this.setState({ raceTimesToDisplay: startTimes, startTab: true, finishTab: false })
   }
 
   displayFinishTimes(){
     const finishTimes = this.state.raceTimes.filter(time => time.tap === 'Finish')
-    this.setState({ raceTimesToDisplay: finishTimes})
+    this.setState({ raceTimesToDisplay: finishTimes, startTab: false, finishTab: true})
   }
 
   getNumTimesWithNoCrew(){
@@ -88,21 +90,20 @@ class RaceTimeIndex extends React.Component {
     return (
       <section className="section">
         <div className="container">
-
           <div className="tabContainer">
-            <div className="phTabs" onClick={this.displayStartTimes}>
-              <p>Start Times</p>
-            </div>
-            <div className="phTabs" onClick={this.displayFinishTimes}>
-              <p>Finish Times</p>
+            <div className="tabs is-toggle is-large is-centered">
+              <ul>
+                <li onClick={this.displayStartTimes}><a className={`startTab ${this.state.startTab ? 'active' : ''}`}>Start times</a></li>
+                <li onClick={this.displayFinishTimes}><a className={`finishTab ${this.state.finishTab ? 'active' : ''}`}>Finish times</a></li>
+              </ul>
             </div>
           </div>
 
-          <div className="field control has-icons-left">
+          <div className="search field control has-icons-left">
             <span className="icon is-left">
               <i className="fas fa-search"></i>
             </span>
-            <input className="input is-fullwidth" placeholder="search" onKeyUp={this.handleSearchKeyUp} />
+            <input className="input" placeholder="search" onKeyUp={this.handleSearchKeyUp} />
 
           </div>
 
@@ -149,6 +150,7 @@ class RaceTimeIndex extends React.Component {
             </tbody>
           </table>
         </div>
+
       </section>
     )
   }

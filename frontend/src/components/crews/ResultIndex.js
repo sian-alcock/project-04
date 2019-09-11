@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import { formatTimes } from '../../lib/helpers'
 
-const _ = require('lodash').runInContext()
+// const _ = require('lodash').runInContext()
 
 class ResultIndex extends React.Component {
   constructor() {
@@ -46,7 +46,6 @@ class ResultIndex extends React.Component {
                 <td>Crew</td>
                 <td>Time</td>
                 <td>Event</td>
-                <td>Pos</td>
                 <td>Penalty</td>
               </tr>
             </thead>
@@ -58,7 +57,6 @@ class ResultIndex extends React.Component {
                 <td>Crew</td>
                 <td>Time</td>
                 <td>Event</td>
-                <td>Pos</td>
                 <td>Penalty</td>
               </tr>
             </tfoot>
@@ -72,7 +70,6 @@ class ResultIndex extends React.Component {
                   <td>{crew.name}</td>
                   <td>{formatTimes(crew.race_time)}</td>
                   <td>{crew.event.name}</td>
-                  <td>Pos</td>
                   <td>{crew.penalty ? 'P' : ''}</td>
                 </tr>
               )}

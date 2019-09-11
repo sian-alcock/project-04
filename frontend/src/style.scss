@@ -5,10 +5,19 @@ $bblBlue: #341499;
 $phLogoBlue: #00B4FC;
 $phLogoRiver: #1E099C;
 $bblLogoBlu: #4169e1;
-
 $primary: $bblBlue;
-
 $section-padding: 1.5rem 1.5rem;
+// $tabs-link-hover-color: $phLogoBlue;
+$tabs-boxed-link-hover-background-color: $phLogoBlue;
+$tabs-toggle-link-hover-background-color: $phLogoBlue;
+$tabs-toggle-link-active-background-color: $phLogoBlue;
+
+.startTab.active, .finishTab.active {
+  text-align: center;
+  padding: 10px 30px;
+  background-color: $phLogoBlue;
+  border: 1px solid #dbdbdb;
+}
 
 body {
   margin: 0 auto;
@@ -16,6 +25,11 @@ body {
 
 table {
   margin: 0 auto;
+}
+
+.container {
+  text-align: center;
+  align-content: center;
 }
 
 .tabContainer {
@@ -27,10 +41,9 @@ table {
   margin-bottom: 10px;
 }
 
-.phTabs {
-  text-align: center;
-  background-color: $primary;
-  padding: 10px 30px;
+.search {
+  width: 400px;
+  margin: 0 auto;
 }
 
 .header {
