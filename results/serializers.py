@@ -23,7 +23,7 @@ class CrewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Crew
-        fields = ('id', 'name', 'composite_code', 'rowing_CRI', 'rowing_CRI_max', 'sculling_CRI', 'sculling_CRI_max', 'status', 'penalty', 'handicap', 'manual_override_time', 'bib_number',)
+        fields = ('name', 'composite_code', 'rowing_CRI', 'rowing_CRI_max', 'sculling_CRI', 'sculling_CRI_max', 'status', 'penalty', 'handicap', 'manual_override_time', 'bib_number',)
 
 
 class PopulatedCrewSerializer(serializers.ModelSerializer):
@@ -52,28 +52,6 @@ class WriteCrewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Crew
         fields = ('id', 'name', 'composite_code', 'club', 'rowing_CRI', 'rowing_CRI_max', 'sculling_CRI', 'sculling_CRI_max', 'event', 'status', 'penalty', 'handicap', 'manual_override_time',)
-
-    # def validate_club(self, value):
-    #     # relies on there being a club with id 999999 = unknown
-    #     try:
-    #         value = Club.objects.get(pk=int(value))
-    #     # if club_id not found, set to club 999999
-    #
-    #     except Club.DoesNotExist:
-    #         value = Club.objects.get(pk=999999)
-    #
-    #     return value
-    #
-    # def validate_event(self, value):
-    #     # relies on there being an event with id 999999 = unknown
-    #     try:
-    #         value = Event.objects.get(pk=int(value))
-    #     # if event_id not found, set to event 999999
-    #
-    #     except Event.DoesNotExist:
-    #         value = Event.objects.get(pk=999999)
-    #
-    #     return value
 
 class WriteRaceTimesSerializer(serializers.ModelSerializer):
 

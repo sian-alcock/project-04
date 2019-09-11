@@ -10,7 +10,7 @@ const _ = require('lodash').runInContext()
 class CrewIndex extends React.Component {
   constructor() {
     super()
-    this.state= {
+    this.state = {
       crews: [],
       searchTerm: '',
       sortTerm: 'finish_sequence|asc',
@@ -130,50 +130,61 @@ class CrewIndex extends React.Component {
       <section className="section">
         <div className="container">
 
-          <div className="field control has-icons-left">
-            <span className="icon is-left">
-              <i className="fas fa-search"></i>
-            </span>
-            <input className="input is-fullwidth" placeholder="search" onKeyUp={this.handleSearchKeyUp} />
+          <div className="columns">
 
-          </div>
+            <div className="column">
+              <div className="field control has-icons-left">
+                <span className="icon is-left">
+                  <i className="fas fa-search"></i>
+                </span>
+                <input className="input" placeholder="search" onKeyUp={this.handleSearchKeyUp} />
 
-          <div className="field">
-            <div className="select is-fullwidth">
-              <select onChange={this.handleSortChange}>
-                <option value="name|asc">Name A-Z</option>
-                <option value="name|desc">Name Z-A</option>
-                <option value="start_sequence|asc">Start sequence, asc</option>
-                <option value="start_sequence|desc">Start sequence, desc</option>
-                <option value="finish_sequence|asc">Finish sequence, asc</option>
-                <option value="finish_sequence|desc">Finish sequence, desc</option>
-                <option value="club.index_code|asc">Club, asc</option>
-                <option value="club.index_code|desc">Club, desc</option>
-                <option value="event.name|asc">Event, asc</option>
-                <option value="event.name|desc">Event, desc</option>
-              </select>
+              </div>
             </div>
-          </div>
 
-          <div className="field">
-            <label className="checkbox" >
-              <input type="checkbox"  className="checkbox" value="crewsWithoutStartTime" onClick={this.handleCrewsWithoutStartTime} />
-              {`Crews without start time (${this.getNumCrewsWithoutStartTimes()})`}
-            </label>
-          </div>
+            <div className="column">
+              <div className="field">
+                <div className="select">
+                  <select onChange={this.handleSortChange}>
+                    <option value="name|asc">Name A-Z</option>
+                    <option value="name|desc">Name Z-A</option>
+                    <option value="start_sequence|asc">Start sequence, asc</option>
+                    <option value="start_sequence|desc">Start sequence, desc</option>
+                    <option value="finish_sequence|asc">Finish sequence, asc</option>
+                    <option value="finish_sequence|desc">Finish sequence, desc</option>
+                    <option value="club.index_code|asc">Club, asc</option>
+                    <option value="club.index_code|desc">Club, desc</option>
+                    <option value="event.name|asc">Event, asc</option>
+                    <option value="event.name|desc">Event, desc</option>
+                  </select>
+                </div>
+              </div>
+            </div>
 
-          <div className="field">
-            <label className="checkbox" >
-              <input type="checkbox"  className="checkbox" value="crewsWithoutFinishTime" onClick={this.handleCrewsWithoutFinishTime} />
-              {`Crews without finish time (${this.getNumCrewsWithoutFinishTimes()})`}
-            </label>
-          </div>
+            <div className="column">
+              <div className="field">
+                <label className="checkbox" >
+                  <input type="checkbox"  className="checkbox" value="crewsWithoutStartTime" onClick={this.handleCrewsWithoutStartTime} />
+                  {`Crews without start time (${this.getNumCrewsWithoutStartTimes()})`}
+                </label>
+              </div>
 
-          <div className="field">
-            <label className="checkbox" >
-              <input type="checkbox"  className="checkbox" value="showScratchedCrews" onClick={this.handleScratchedCrews} />
-              {`Hide scratched crews (${this.getNumScratchedCrews()})`}
-            </label>
+              <div className="field">
+                <label className="checkbox" >
+                  <input type="checkbox"  className="checkbox" value="crewsWithoutFinishTime" onClick={this.handleCrewsWithoutFinishTime} />
+                  {`Crews without finish time (${this.getNumCrewsWithoutFinishTimes()})`}
+                </label>
+              </div>
+            </div>
+
+            <div className="column">
+              <div className="field">
+                <label className="checkbox" >
+                  <input type="checkbox"  className="checkbox" value="showScratchedCrews" onClick={this.handleScratchedCrews} />
+                  {`Hide scratched crews (${this.getNumScratchedCrews()})`}
+                </label>
+              </div>
+            </div>
           </div>
 
           <table className="table">

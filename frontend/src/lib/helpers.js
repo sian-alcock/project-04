@@ -11,6 +11,6 @@ export const formatTimes = function formatTimes(timeInMs){
 }
 
 export const formatTimeDate = function formatTimeDate(timeInMs){
-  const duration = moment.duration(timeInMs).format('DD MM YY h:mm')
-  return duration
+  const date = new Date(timeInMs)
+  return date.toDateString()
 }

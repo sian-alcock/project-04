@@ -31,6 +31,7 @@ class CrewTimeEdit extends React.Component {
   }
 
   handleChange(e) {
+    console.log('e props and val', e.target.name, e.target.value)
     const formData = { ...this.state.formData, [e.target.name]: e.target.value }
     this.setState({ formData })
   }
@@ -56,7 +57,7 @@ class CrewTimeEdit extends React.Component {
               </div>
 
               <div className="column is-one-third">
-                <div>x</div>
+                <div>Bib number: {this.state.formData.bib_number}</div>
               </div>
 
             </div>
@@ -78,11 +79,11 @@ class CrewTimeEdit extends React.Component {
             </div>
 
             <div className="field">
-              <label className="label" htmlFor="manualOverride">Override race time</label>
+              <label className="label" htmlFor="manual_override_time">Override race time</label>
               <input
                 className="input"
-                name="manualOverride"
-                id="manualOverride"
+                name="manual_override_time"
+                id="manual_override_time"
                 placeholder="eg: 16:09.12"
                 value={this.state.formData.manual_override_time || ''}
                 onChange={this.handleChange}

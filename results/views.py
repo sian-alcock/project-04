@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 # from pprint import pprint
 
-from .serializers import PopulatedCrewSerializer, WriteRaceTimesSerializer, RaceTimesSerializer, PopulatedRaceTimesSerializer, WriteCrewSerializer, WriteClubSerializer, ClubSerializer, EventSerializer
+from .serializers import CrewSerializer, PopulatedCrewSerializer, WriteRaceTimesSerializer, RaceTimesSerializer, PopulatedRaceTimesSerializer, WriteCrewSerializer, WriteClubSerializer, ClubSerializer, EventSerializer
 from .models import Club, Event, Crew, RaceTime
 
 class ClubListView(APIView): # extend the APIView
@@ -106,7 +106,7 @@ class CrewDetailView(APIView): # extend the APIView
     def put(self, request, pk):
         crew = self.get_crew(pk)
         crew = Crew.objects.get(pk=pk)
-        serializer = PopulatedCrewSerializer(crew, data=request.data)
+        serializer = CrewSerializer(crew, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=201)

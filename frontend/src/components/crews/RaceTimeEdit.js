@@ -37,7 +37,7 @@ class RaceTimeEdit extends React.Component {
       ...this.state.formData,
       crew: this.state.formData.crew.value
     }
-    
+
     axios.put(`/api/race-times/${this.props.match.params.id}`, data)
       .then(() => this.props.history.push(`/crews/${this.props.match.params.id}`))
       .catch(err => this.setState({ errors: err.response.data.errors }))
@@ -51,7 +51,6 @@ class RaceTimeEdit extends React.Component {
 
   render() {
     if(!this.state.formData) return null
-    console.log(this.state.formData)
     console.log('crews', this.state.crews)
     {!this.state.crews && <h2>Loading</h2>}
     return (
@@ -83,7 +82,7 @@ class RaceTimeEdit extends React.Component {
                   id="crew"
                   onChange={this.handleSelectChange}
                   options={this.state.crews}
-                  value={this.state.formData.crew}
+                  value = {this.state.crews.find(option => option.value === this.state.formData.crew)}
                 />
               </div>
             </div>

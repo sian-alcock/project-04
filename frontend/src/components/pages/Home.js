@@ -1,20 +1,16 @@
 import React from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
-
-import { formatTimeDate } from '../../lib/helpers'
-// import { ButtonLoader } from '../common/ButtonLoader'
+import CrewLoader from '../common/importCrewData'
+import TimeLoader from '../common/importTimeData'
 
 class Home extends React.Component {
   constructor() {
     super()
     this.state= {
-      crews: [],
-      crewsLoading: false,
-      raceTimesLoading: false
+      crews: []
     }
-    this.getRaceTimes = this.getRaceTimes.bind(this)
-    this.getBROECrewData = this.getBROECrewData.bind(this)
+
     this.getCrewsWithTimes = this.getCrewsWithTimes.bind(this)
     this.getCrewsWithoutTimes = this.getCrewsWithoutTimes.bind(this)
     this.getTotalCrews = this.getTotalCrews.bind(this)
@@ -24,29 +20,6 @@ class Home extends React.Component {
   componentDidMount() {
     axios.get('/api/crews')
       .then(res => this.setState({ crews: res.data}))
-  }
-
-  getBROECrewData(){
-    this.setState({ crewsLoading: true })
-    //get clubs and events first, then get crews
-    Promise.all([
-      axios.get('/api/club-data-import/'),
-      axios.get('/api/event-data-import/')
-    ]).then(([res1, res2]) => {
-      console.log(res1.data, res2.data)
-    }).then(this.setState({ crewDataUpdated: Date.now(), crewsLoading: false }))
-      .then(axios.get('/api/crew-data-import/')
-        .then(res3 => console.log(res3.data)))
-  }
-
-  getRaceTimes(){
-    this.setState({ loading: true })
-    axios.get('/api/crew-race-times')
-      .then(res => {
-        console.log(res.data)
-      })
-      .then(this.setState({ raceTimesDataUpdated: Date.now(), loading: false }
-      ))
   }
 
   getCrewsWithTimes(){
@@ -85,18 +58,13 @@ class Home extends React.Component {
         <div className="container">
           <div className="columns is-centered">
             <div className="column has-text-centered">
-              <button className="button is-primary" onClick={this.getBROECrewData} disabled={this.state.crewsLoading}>
-                {this.state.crewsLoading ? 'Loading Crew Data' : 'Get Crew Data'}
-              </button>
-              <p><small>{`Updated: ${formatTimeDate(this.state.crewDataUpdated)}` || 'No data'}</small></p>
+              <CrewLoader/>
             </div>
 
             <div className="column has-text-centered">
-              <button className="button is-primary" onClick={this.getRaceTimes} disabled={this.state.raceTimesLoading}>
-                {this.state.raceTimesLoading ? 'Loading race times' : 'Get race times'}
-              </button>
-              <p><small>{`Updated: ${formatTimeDate(this.state.raceTimesDataUpdated)}` || 'No data'}</small></p>
+              <TimeLoader/>
             </div>
+
             <div className="column has-text-centered">
               <Link to="/race-times">
                 <button className="button is-primary">
@@ -104,6 +72,7 @@ class Home extends React.Component {
                 </button>
               </Link>
             </div>
+            
             <div className="column has-text-centered">
               <Link to="/race-times">
                 <button className="button is-primary">
