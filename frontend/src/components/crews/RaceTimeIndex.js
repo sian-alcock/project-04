@@ -119,9 +119,9 @@ class RaceTimeIndex extends React.Component {
                 <th>Sequence</th>
                 <th>Tap</th>
                 <th>Start / Finish Tap</th>
+                <th>Bib number</th>
                 <th>Crew ID</th>
                 <th>Crew name</th>
-                <th>Bib number</th>
               </tr>
             </thead>
             <tfoot>
@@ -129,21 +129,20 @@ class RaceTimeIndex extends React.Component {
                 <th>Sequence</th>
                 <th>Tap</th>
                 <th>Start / Finish Tap</th>
+                <th>Bib number</th>
                 <th>Crew ID</th>
                 <th>Crew name</th>
-                <th>Bib number</th>
               </tr>
             </tfoot>
             <tbody>
               {this.state.raceTimesToDisplay.map(raceTime =>
                 <tr key={raceTime.id}>
                   <td><Link to={`/race-times/${raceTime.id}`}>{raceTime.sequence}</Link></td>
-                  <td>{raceTime.sequence}</td>
                   <td>{raceTime.tap}</td>
                   <td>{formatTimes(raceTime.time_tap)}</td>
+                  <td>{raceTime.bib_number === null ? '⚠️' : raceTime.bib_number}</td>
                   <td>{raceTime.crew === null ? '⚠️' : raceTime.crew.id}</td>
                   <td>{raceTime.crew === null ? '⚠️' : raceTime.crew.name}</td>
-                  <td>{raceTime.bib_number === null ? '⚠️' : raceTime.crew.name}</td>
 
                 </tr>
               )}

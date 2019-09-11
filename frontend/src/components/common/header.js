@@ -1,13 +1,11 @@
 import React from 'react'
-import image from '../../assets/phlogo-horizontal.png'
+import image from '../../assets/ph-logo.jpg'
 
 class Header extends React.Component {
   render(){
     return(
-      <header>
-        <div className="header">
-          <img src={image} alt='Pairs Head of the River logo' />
-        </div>
+      <header className="header">
+        <img className="logo" src={image} alt='Pairs Head of the River logo' />
       </header>
     )
   }

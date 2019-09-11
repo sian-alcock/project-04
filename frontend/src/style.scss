@@ -4,9 +4,15 @@ $family-primary: 'Open Sans', sans-serif;
 $bblBlue: #341499;
 $primary: $bblBlue;
 
+body {
+  margin: 0 auto;
+}
+
 .header {
   margin-left: 55px;
   margin-top: 10px;
+  display: inline-flex;
+  align-items: baseline;
 }
 
 .navbar-item {
@@ -17,9 +23,12 @@ $primary: $bblBlue;
   margin-right: 8px;
 }
 
+.button {
+  width: 200px;
+}
 
-// .progress.active {
-//   background-image: <i className="fas fa-spinner"></i>;
-// }
+.button:disabled {
+  opacity: 0.5;
+}
 
 @import "~bulma"
