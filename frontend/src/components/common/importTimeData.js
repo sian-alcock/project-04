@@ -10,19 +10,9 @@ class TimeLoader extends Component {
       loading: false,
       raceTimesDataUpdated: ''
     }
-    // this.getRaceTimes = this.getRaceTimes.bind(this)
+
     this.getData = this.getData.bind(this)
   }
-
-  // getRaceTimes(){
-  //   this.setState({ loading: true })
-  //   axios.get('/api/crew-race-times')
-  //     .then(res => {
-  //       console.log(res.data)
-  //     })
-  //     .then(this.setState({ raceTimesDataUpdated: Date.now(), loading: false }
-  //     ))
-  // }
 
   async getData() {
 
