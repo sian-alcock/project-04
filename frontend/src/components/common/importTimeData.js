@@ -8,19 +8,36 @@ class TimeLoader extends Component {
 
     this.state = {
       loading: false,
-      timeDataUpdated: ''
+      raceTimesDataUpdated: ''
     }
-    this.getRaceTimes = this.getRaceTimes.bind(this)
+    // this.getRaceTimes = this.getRaceTimes.bind(this)
+    this.getData = this.getData.bind(this)
   }
 
-  getRaceTimes(){
+  // getRaceTimes(){
+  //   this.setState({ loading: true })
+  //   axios.get('/api/crew-race-times')
+  //     .then(res => {
+  //       console.log(res.data)
+  //     })
+  //     .then(this.setState({ raceTimesDataUpdated: Date.now(), loading: false }
+  //     ))
+  // }
+
+  async getData() {
+
     this.setState({ loading: true })
-    axios.get('/api/crew-race-times')
-      .then(res => {
-        console.log(res.data)
-      })
-      .then(this.setState({ raceTimesDataUpdated: Date.now(), loading: false }
-      ))
+
+    try {
+
+      const times = await axios.get('/api/crew-race-times')
+      console.log(times.data)
+
+      this.setState({ raceTimesDataUpdated: Date.now(), loading: false })
+
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   render() {
@@ -28,17 +45,15 @@ class TimeLoader extends Component {
 
     return (
       <div>
-        <button className="button is-primary" onClick={this.getRaceTimes} disabled={loading}>
-          {loading && (
-            <i
-              className="fas fa-spinner fa-spin"
-              style={{ marginRight: '5px' }}
-            />
-          )}
-          {loading && <span>Loading ...</span>}
-          {!loading && <span>Get Race times</span>}
+        <button className="button is-primary" onClick={this.getData} disabled={loading}>
+
+          {loading && <span className="spinner"><i
+            className="fas fa-spinner fa-spin"
+          />Loading ...</span>}
+          {!loading && <span>Get race times</span>}
         </button>
-        <p><small>{!this.state.timeDataUpdated ? '' : `Updated: ${formatTimeDate(this.state.timeDataUpdated)}`}</small></p>
+
+        <p><small>{!this.state.raceTimesDataUpdated ? '' : `Updated: ${formatTimeDate(this.state.raceTimesDataUpdated)}`}</small></p>
       </div>
     )
   }
