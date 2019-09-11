@@ -16,7 +16,7 @@ class CrewIndex extends React.Component {
       sortTerm: 'finish_sequence|asc',
       crewsWithoutStartTimeBoolean: false,
       crewsWithoutFinishTimeBoolean: false,
-      handleScratchedCrewsBoolean: false
+      handleScratchedCrewsBoolean: true
     }
 
     // this.formatTimes = this.formatTimes.bind(this)
@@ -107,7 +107,7 @@ class CrewIndex extends React.Component {
       filteredByCrewsWithoutFinishTime = this.state.crews
     }
 
-    if(!this.state.scratchedCrewsBoolean) {
+    if(this.state.scratchedCrewsBoolean) {
       filteredByScratchedCrews = this.state.crews.filter(crew => crew !== 'Scratched')
     } else {
       filteredByScratchedCrews = this.state.crews
@@ -172,7 +172,7 @@ class CrewIndex extends React.Component {
           <div className="field">
             <label className="checkbox" >
               <input type="checkbox"  className="checkbox" value="showScratchedCrews" onClick={this.handleScratchedCrews} />
-              {`Show scratched crews (${this.getNumScratchedCrews()})`}
+              {`Hide scratched crews (${this.getNumScratchedCrews()})`}
             </label>
           </div>
 
@@ -191,7 +191,6 @@ class CrewIndex extends React.Component {
                 <td>Start time</td>
                 <td>Finish time</td>
                 <td>Race time</td>
-                <td><abbr title="Position in category">Pos</abbr></td>
               </tr>
             </thead>
             <tfoot>
@@ -208,7 +207,6 @@ class CrewIndex extends React.Component {
                 <td>Start time</td>
                 <td>Finish time</td>
                 <td>Race time</td>
-                <td><abbr title="Position in category">Pos</abbr></td>
               </tr>
             </tfoot>
             <tbody>
@@ -226,7 +224,6 @@ class CrewIndex extends React.Component {
                   <td>{crew.start_time ? formatTimes(crew.start_time) : '⚠️'}</td>
                   <td>{crew.finish_time ? formatTimes(crew.finish_time) : '⚠️'}</td>
                   <td>{crew.raw_time ? formatTimes(crew.raw_time) : '⚠️'}</td>
-                  <td>pos?</td>
                 </tr>
               )}
             </tbody>

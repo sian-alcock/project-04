@@ -18,6 +18,7 @@ class Home extends React.Component {
     this.getCrewsWithTimes = this.getCrewsWithTimes.bind(this)
     this.getCrewsWithoutTimes = this.getCrewsWithoutTimes.bind(this)
     this.getTotalCrews = this.getTotalCrews.bind(this)
+    this.getScratchedCrewsWithTimes = this.getScratchedCrewsWithTimes.bind(this)
   }
 
   componentDidMount() {
@@ -49,13 +50,18 @@ class Home extends React.Component {
   }
 
   getCrewsWithTimes(){
-    const crewsWithTimes = this.state.crews.filter(crew => crew.times.length === 2)
+    const crewsWithTimes = this.state.crews.filter(crew => crew.status !== 'Scratched' && crew.times.length === 2)
     return crewsWithTimes.length
   }
 
   getCrewsWithoutTimes(){
-    const crewsWithoutTimes = this.state.crews.filter(crew => crew.times.length !== 2)
+    const crewsWithoutTimes = this.state.crews.filter(crew => crew.status !== 'Scratched' && crew.times.length !== 2)
     return crewsWithoutTimes.length
+  }
+
+  getScratchedCrewsWithTimes(){
+    const scratchedCrewsWithTimes = this.state.crews.filter(crew => crew.status === 'Scratched' && crew.times.length === 2)
+    return scratchedCrewsWithTimes.length
   }
 
   getTotalCrews(){
@@ -150,10 +156,10 @@ class Home extends React.Component {
               <p>{this.getScratchedCrews()}</p>
             </div>
             <div className="column">
-              <p></p>
+              <p>Scratched crews that have a time</p>
             </div>
             <div className="column">
-              <p></p>
+              <p>{this.getScratchedCrewsWithTimes()}</p>
             </div>
           </div>
 

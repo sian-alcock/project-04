@@ -89,11 +89,11 @@ class RaceTimeIndex extends React.Component {
       <section className="section">
         <div className="container">
 
-          <div className="columns">
-            <div className="column" onClick={this.displayStartTimes}>
+          <div className="tabContainer">
+            <div className="phTabs" onClick={this.displayStartTimes}>
               <p>Start Times</p>
             </div>
-            <div className="column" onClick={this.displayFinishTimes}>
+            <div className="phTabs" onClick={this.displayFinishTimes}>
               <p>Finish Times</p>
             </div>
           </div>
