@@ -11,11 +11,10 @@ class Home(View):
 
 class Assets(View):
 
-    def get(self, _request, filename):
+    def get(self, _requests, filename):
         path = os.path.join(os.path.dirname(__file__), 'dist', filename)
-
         if os.path.isfile(path):
-            with open(path) as file:
+            with open(path, 'rb') as file:
                 return HttpResponse(file.read())
         else:
             return HttpResponseNotFound()
