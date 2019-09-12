@@ -26,8 +26,8 @@ class CrewTimeEdit extends React.Component {
   handleSubmit(e) {
     e.preventDefault()
     axios.put(`/api/crews/${this.props.match.params.id}`, this.state.formData)
-      .then(() => this.props.history.push(`/crews/${this.props.match.params.id}`))
-      .catch(err => this.setState({ errors: err.response.data.errors }))
+      .then(() => this.props.history.push('/crews'))
+      .catch(err => this.setState({ errors: err.response.data }))
   }
 
   handleChange(e) {
