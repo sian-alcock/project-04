@@ -2,7 +2,7 @@ import csv
 import os
 import requests
 from django.http import Http404
-from rest_framework.pagination import LimitOffsetPagination, PageNumberPagination
+# from rest_framework.pagination import LimitOffsetPagination, PageNumberPagination
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -75,7 +75,7 @@ class RaceTimeDetailView(APIView):
         return Response(status=204)
 
 class CrewListView(APIView): # extend the APIView
-    pagination_class = LimitOffsetPagination
+    # pagination_class = LimitOffsetPagination
 
     def get(self, _request):
         crews = Crew.objects.filter(status__in=('Scratched', 'Accepted')) # get all the crews
