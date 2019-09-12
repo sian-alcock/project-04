@@ -165,14 +165,14 @@ class CrewIndex extends React.Component {
               <div className="field">
                 <label className="checkbox" >
                   <input type="checkbox"  className="checkbox" value="crewsWithoutStartTime" onClick={this.handleCrewsWithoutStartTime} />
-                  {`Crews without start time (${this.getNumCrewsWithoutStartTimes()})`}
+                  {`⚠️ Crews without start time (${this.getNumCrewsWithoutStartTimes()})`}
                 </label>
               </div>
 
               <div className="field">
                 <label className="checkbox" >
                   <input type="checkbox"  className="checkbox" value="crewsWithoutFinishTime" onClick={this.handleCrewsWithoutFinishTime} />
-                  {`Crews without finish time (${this.getNumCrewsWithoutFinishTimes()})`}
+                  {`⚠️ Crews without finish time (${this.getNumCrewsWithoutFinishTimes()})`}
                 </label>
               </div>
             </div>

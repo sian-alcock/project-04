@@ -110,7 +110,7 @@ class RaceTimeIndex extends React.Component {
           <div className="field">
             <label className="checkbox" >
               <input type="checkbox"  className="checkbox" value="timesWithoutCrew" onClick={this.handleTimesWithoutCrew} />
-              {`Times with no crew (${this.getNumTimesWithNoCrew()})`}
+              {`⚠️ Times with no crew (${this.getNumTimesWithNoCrew()})`}
             </label>
           </div>
 
