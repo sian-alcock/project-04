@@ -11,9 +11,9 @@ import CrewTimeEdit from './components/crews/CrewTimeEdit'
 import RaceTimeIndex from './components/crews/RaceTimeIndex'
 import RaceTimeEdit from './components/crews/RaceTimeEdit'
 import ResultIndex from './components/crews/ResultIndex'
-import Navbar from './components/common/navbar'
-import Footer from './components/common/footer'
-import Header from './components/common/header'
+import Navbar from './components/common/Navbar'
+import Footer from './components/common/Footer'
+import Header from './components/common/Header'
 
 
 // import 'react-toastify/dist/ReactToastify.css'

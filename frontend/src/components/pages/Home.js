@@ -1,8 +1,8 @@
 import React from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
-import CrewLoader from '../common/importCrewData'
-import TimeLoader from '../common/importTimeData'
+import CrewLoader from '../common/ImportCrewData'
+import TimeLoader from '../common/ImportTimeData'
 
 class Home extends React.Component {
   constructor() {
@@ -72,7 +72,7 @@ class Home extends React.Component {
                 </button>
               </Link>
             </div>
-            
+
             <div className="column has-text-centered">
               <Link to="/race-times">
                 <button className="button is-primary">
