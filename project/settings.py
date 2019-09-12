@@ -9,8 +9,8 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
-
 import os
+import django_heroku
 from dotenv import load_dotenv
 load_dotenv()
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -132,3 +132,5 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication'
     ],
 }
+
+django_heroku.settings(locals())
