@@ -1,8 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { formatTimes } from '../../lib/helpers'
-
-// const _ = require('lodash').runInContext()
+import Img from 'react-image'
 
 class ResultIndex extends React.Component {
   constructor() {
@@ -18,17 +17,17 @@ class ResultIndex extends React.Component {
       .then(res => this.setState({ crews: res.data }))
   }
 
-  // calculateOverallPosition(){
-  //   const sorted = this.state.crewsToDisplay.slice().sort((a,b) => b-a)
-  //   const ranks = this.state.crewsToDisplay.slice().map(value => sorted.indexOf(value)+1)
-  //   return ranks
-  // }
-
   getCrewsToDisplay() {
     const filteredCrews = this.state.crews.filter(crew => crew.raw_time !== null)
     const crewsToDisplay = filteredCrews.sort((a, b) => (a.race_time > b.race_time) ? 1 : -1)
     console.log('crewstodisplay', crewsToDisplay)
     return crewsToDisplay
+  }
+
+  getImage() {
+    <Img
+      src={['https://www.example.com/foo.jpg', '../../assets/unknown_blades.png']}
+    />
   }
 
   render() {
@@ -42,7 +41,7 @@ class ResultIndex extends React.Component {
               <tr>
                 <td>Overall</td>
                 <td>Crew ID</td>
-                <td colSpan='2'>Club</td>
+                <td colSpan='2'>Rowing club</td>
                 <td>Crew</td>
                 <td>Time</td>
                 <td>Event</td>
@@ -53,7 +52,7 @@ class ResultIndex extends React.Component {
               <tr>
                 <td>Overall</td>
                 <td>Crew ID</td>
-                <td colSpan='2'>Club</td>
+                <td colSpan='2'>Rowing club</td>
                 <td>Crew</td>
                 <td>Time</td>
                 <td>Event</td>
@@ -65,7 +64,7 @@ class ResultIndex extends React.Component {
                 <tr key={crew.id}>
                   <td>{i += 1}</td>
                   <td>{crew.id}</td>
-                  <td><img src={crew.club.blade_image} alt="blade image" width="40px" /></td>
+                  <td><img className="blades" src={crew.club.blade_image} alt="blade image" width="40px" /></td>
                   <td>{crew.club.name}</td>
                   <td>{crew.name}</td>
                   <td>{formatTimes(crew.race_time)}</td>
