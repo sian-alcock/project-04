@@ -56,31 +56,7 @@ class Home extends React.Component {
     return (
       <section className="section">
         <div className="container">
-          <div className="columns is-centered">
-            <div className="column has-text-centered">
-              <CrewLoader/>
-            </div>
 
-            <div className="column has-text-centered">
-              <TimeLoader/>
-            </div>
-
-            <div className="column has-text-centered">
-              <Link to="/race-times">
-                <button className="button is-primary">
-                  Fix Start Sequence
-                </button>
-              </Link>
-            </div>
-
-            <div className="column has-text-centered">
-              <Link to="/race-times">
-                <button className="button is-primary">
-                Fix Finish Sequence
-                </button>
-              </Link>
-            </div>
-          </div>
 
           <div className="box">
             <h2 className="subtitle has-text-centered">Summary</h2>
@@ -132,22 +108,29 @@ class Home extends React.Component {
             </div>
           </div>
 
-          <div className="box">
-            <h2 className="subtitle has-text-centered">Prepare Results</h2>
-          </div>
+          <div className="columns is-centered">
+            <div className="column has-text-centered">
+              <CrewLoader/>
+            </div>
 
-          <div className="columns">
             <div className="column has-text-centered">
-              <button className="button is-primary">Results Overview</button>
+              <TimeLoader/>
             </div>
+
             <div className="column has-text-centered">
-              <button className="button is-primary">Calculate Handicaps</button>
+              <Link to="/race-times">
+                <button className="button is-primary">
+                  Fix Start Sequence
+                </button>
+              </Link>
             </div>
+
             <div className="column has-text-centered">
-              <button className="button is-primary">Publish to GoogleDrive</button>
-            </div>
-            <div className="column has-text-centered">
-              <button className="button is-primary">Submit BROE Results</button>
+              <Link to="/race-times">
+                <button className="button is-primary">
+                Fix Finish Sequence
+                </button>
+              </Link>
             </div>
           </div>
 

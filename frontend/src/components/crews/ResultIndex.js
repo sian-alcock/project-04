@@ -1,7 +1,6 @@
 import React from 'react'
 import axios from 'axios'
 import { formatTimes } from '../../lib/helpers'
-import Img from 'react-image'
 
 class ResultIndex extends React.Component {
   constructor() {
@@ -22,12 +21,6 @@ class ResultIndex extends React.Component {
     const crewsToDisplay = filteredCrews.sort((a, b) => (a.race_time > b.race_time) ? 1 : -1)
     console.log('crewstodisplay', crewsToDisplay)
     return crewsToDisplay
-  }
-
-  getImage() {
-    <Img
-      src={['https://www.example.com/foo.jpg', '../../assets/unknown_blades.png']}
-    />
   }
 
   render() {
