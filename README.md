@@ -12,7 +12,7 @@ The application’s purpose is to generate results for the Pair’s Head Rowing 
 
 As a volunteer for Barnes Bridge Ladies Rowing club who run this race, I help the race organizer to produce the results each year using Excel.  I am hoping that this application will replace the Excel and make the process much simpler.
 
-The website consumes data about crews from an API supported by the British Rowing website.  It also reads race times from .csv files exported from an application called WebScorer. The goal of the application is to pull together the crew data from British rowing and match up to the timing data from Webscorer and to produce a set of results that will be published to GoogleSheets (since all 800+ rowers are keen to access it as soon as the results go up.)
+The website consumes data about crews from an API supported by the British Rowing website.  It also reads race times from .csv files exported from an application called WebScorer. The goal of the application is to pull together the crew data from British rowing and match up to the timing data from WebScorer and to produce a set of results that will be published to GoogleSheets (since all 800+ rowers are keen to access it as soon as the results go up.)
 
 ![Screenshot](./readme-assets/Screenshot-solution.png)
 
